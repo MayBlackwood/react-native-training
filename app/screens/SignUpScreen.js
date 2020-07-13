@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet, View, Alert } from "react-native";
 import Input from "./../components/Input";
 import { Button } from "react-native-elements";
 
@@ -22,32 +22,12 @@ const SignUpScreen = () => {
     description,
   } = authInfo;
 
-  const handleFirstNameChange = (e) => {
-    setAuthInfo({ ...authInfo, firstName: e.nativeEvent.text });
-  };
-
-  const handleLastNameChange = (e) => {
-    setAuthInfo({ ...authInfo, lastName: e.nativeEvent.text });
-  };
-
-  const handleEmailChange = (e) => {
-    setAuthInfo({ ...authInfo, email: e.nativeEvent.text });
-  };
-
-  const handlePassChange = (e) => {
-    setAuthInfo({ ...authInfo, password: e.nativeEvent.text });
-  };
-
-  const handleRepeatPassChange = (e) => {
-    setAuthInfo({ ...authInfo, repeatPassword: e.nativeEvent.text });
-  };
-
-  const handleDescChange = (e) => {
-    setAuthInfo({ ...authInfo, description: e.nativeEvent.text });
+  const handleFormChange = (e, name) => {
+    setAuthInfo({ ...authInfo, [name]: e.nativeEvent.text });
   };
 
   const handleButtonClick = () => {
-    console.log(authInfo);
+    Alert.alert("Sign Up", "You are successfully signed up!");
   };
 
   return (
@@ -56,39 +36,39 @@ const SignUpScreen = () => {
         <Input
           placeholder="First Name"
           value={firstName}
-          onHandleChange={handleFirstNameChange}
+          onHandleChange={(e) => handleFormChange(e, "firstName")}
           label="First Name"
         />
         <Input
           placeholder="Last Name"
           value={lastName}
-          onHandleChange={handleLastNameChange}
+          onHandleChange={(e) => handleFormChange(e, "lastName")}
           label="Last Name"
         />
         <Input
           placeholder="Email"
           value={email}
-          onHandleChange={handleEmailChange}
+          onHandleChange={(e) => handleFormChange(e, "email")}
           label="Email"
         />
         <Input
           placeholder="Password"
           value={password}
-          onHandleChange={handlePassChange}
+          onHandleChange={(e) => handleFormChange(e, "password")}
           label="Password"
           secureTextEntry={true}
         />
         <Input
           placeholder="Repeat Password"
           value={repeatPassword}
-          onHandleChange={handleRepeatPassChange}
+          onHandleChange={(e) => handleFormChange(e, "repeatPassword")}
           label="Password"
           secureTextEntry={true}
         />
         <Input
           placeholder="Description"
           value={description}
-          onHandleChange={handleDescChange}
+          onHandleChange={(e) => handleFormChange(e, "description")}
           label="Description"
         />
       </View>
@@ -111,6 +91,6 @@ const styles = StyleSheet.create({
   },
   signUpButton: {
     paddingLeft: 30,
-    paddingRight: 30
+    paddingRight: 30,
   },
 });

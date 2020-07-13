@@ -4,17 +4,12 @@ import CustomButton from "./../components/CustomButton";
 import Input from "./../components/Input";
 
 const AuthScreen = () => {
-  const [emailValue, setEmailValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
+  const [formState, setFormState] = useState({ email: "", password: "" });
 
-  const handlePasswordChange = (e) => {
-    console.log(e.nativeEvent.text);
-    setPasswordValue(e.nativeEvent.text);
-  };
+  const { email, password } = formState;
 
-  const handleEmailChange = (e) => {
-    console.log(e.nativeEvent.text);
-    setEmailValue(e.nativeEvent.text);
+  const handleFormChange = (e, name) => {
+    setFormState({ ...formState, [name]: e.nativeEvent.text });
   };
 
   const handleButtonClick = () => {
@@ -25,8 +20,8 @@ const AuthScreen = () => {
     <SafeAreaView style={styles.container}>
       <View style={{ width: "70%" }}>
         <Input
-          value={emailValue}
-          onHandleChange={handleEmailChange}
+          value={email}
+          onHandleChange={(e) => handleFormChange(e, "email")}
           placeholder="E-mail"
           label="E-mail"
           icon="envelope"
@@ -34,8 +29,8 @@ const AuthScreen = () => {
           keyboardType="email-address"
         />
         <Input
-          value={passwordValue}
-          onHandleChange={handlePasswordChange}
+          value={password}
+          onHandleChange={(e) => handleFormChange(e, "password")}
           placeholder="Password"
           label="Password"
           icon="lock"

@@ -3,22 +3,23 @@ import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { Button } from "react-native-elements";
 
 const Home = ({ navigation }) => {
-  const handleLogInClick = () => {
-    navigation.navigate("Authorization");
+  const handleGoToButtonsClick = (pathName) => {
+    navigation.navigate(pathName);
   };
-  const handleSignUpClick = () => {
-    navigation.navigate("SignUpPage");
-  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <Text>DO you have profile? Log In or Sign Up!</Text>
+      <Text>Do you have profile? Log In or Sign Up!</Text>
       <View style={styles.buttonContainer}>
         <Button
           buttonStyle={styles.button}
           title="Log In"
-          onPress={handleLogInClick}
+          onPress={() => handleGoToButtonsClick("Authorization")}
         />
-        <Button title="Sign Up" onPress={handleSignUpClick} />
+        <Button
+          title="Sign Up"
+          onPress={() => handleGoToButtonsClick("SignUpPage")}
+        />
       </View>
     </SafeAreaView>
   );
