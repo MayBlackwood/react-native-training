@@ -11,7 +11,7 @@ import {
 import CustomButton from "./../components/CustomButton";
 import Input from "./../components/Input";
 
-const AuthScreen = () => {
+const AuthScreen = ({ navigation }) => {
   const [formState, setFormState] = useState({
     email: "",
     username: "",
@@ -41,6 +41,7 @@ const AuthScreen = () => {
           AsyncStorage.setItem("token", data.token);
           Alert.alert("Success", "You are successfully logged in!");
           setFormState({ email: "", username: "", password: "" });
+          navigation.navigate("UserProfile");
         } else {
           Alert.alert("Error", "Check the data.");
         }

@@ -5,6 +5,7 @@ import Home from "./app/screens/Home";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import SignUpScreen from './app/screens/SignUpScreen';
+import UserProfile from './app/screens/UserProfile'
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,11 @@ const App = () => {
           name="SignUpPage"
           component={SignUpScreen}
           title={{ title: "Sign Up Page" }}
+        />
+        <Stack.Screen 
+          name="UserProfile"
+          component={UserProfile}
+          title={{ title: "User Profile"}}
         />
       </Stack.Navigator>
     </NavigationContainer>
