@@ -1,32 +1,64 @@
 import React, { useState } from "react";
-import { SafeAreaView, Alert, StyleSheet, TextInput, View } from "react-native";
+import axios from "axios";
+import {
+  SafeAreaView,
+  Alert,
+  StyleSheet,
+  Text,
+  View,
+  AsyncStorage,
+} from "react-native";
 import CustomButton from "./../components/CustomButton";
 import Input from "./../components/Input";
 
 const AuthScreen = () => {
-  const [formState, setFormState] = useState({ email: "", password: "" });
+  const [formState, setFormState] = useState({
+    email: "",
+    username: "",
+    password: "",
+  });
 
-  const { email, password } = formState;
+  const { email, username, password } = formState;
 
   const handleFormChange = (e, name) => {
     setFormState({ ...formState, [name]: e.nativeEvent.text });
   };
 
-  const handleButtonClick = () => {
-    Alert.alert("Title", "Message", [{ title: "OK" }]);
+  const logInUser = () => {
+    axios({
+      method: "POST",
+      url: "http://10.0.2.2:5000/login",
+      data: {
+        username: username,
+        password: password,
+      },
+      header: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(({ status, data }) => {
+        if (status === 200) {
+          AsyncStorage.setItem("token", data.token);
+          Alert.alert("Success", "You are successfully logged in!");
+          setFormState({ email: "", username: "", password: "" });
+        } else {
+          Alert.alert("Error", "Check the data.");
+        }
+      })
+      .catch((error) => {
+        throw error;
+      });
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ width: "70%" }}>
         <Input
-          value={email}
-          onHandleChange={(e) => handleFormChange(e, "email")}
-          placeholder="E-mail"
-          label="E-mail"
-          icon="envelope"
-          name="email"
-          keyboardType="email-address"
+          value={username}
+          onHandleChange={(e) => handleFormChange(e, "username")}
+          placeholder="Username"
+          label="Username"
+          icon="user"
         />
         <Input
           value={password}
@@ -34,13 +66,11 @@ const AuthScreen = () => {
           placeholder="Password"
           label="Password"
           icon="lock"
-          name="password"
           secureTextEntry={true}
-          autoCompleteType="password"
           password={true}
         />
       </View>
-      <CustomButton title="Log In" onPress={handleButtonClick} />
+      <CustomButton title="Log In" onPress={logInUser} />
     </SafeAreaView>
   );
 };
