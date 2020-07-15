@@ -1,6 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { Button } from "react-native-elements";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { getUser } from "./../store/actions/UserActions";
 
 const Home = ({ navigation }) => {
   const handleGoToButtonsClick = (pathName) => {
@@ -25,7 +28,13 @@ const Home = ({ navigation }) => {
   );
 };
 
-export default Home;
+const mapStateToProps = ({ user }) => {
+  return { userInfo: user };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ getUser }, dispatch);
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -43,3 +52,5 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

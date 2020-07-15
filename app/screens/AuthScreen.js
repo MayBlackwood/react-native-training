@@ -25,7 +25,7 @@ const AuthScreen = ({ navigation }) => {
   };
 
   const logInUser = () => {
-    console.log('hi')
+    console.log("hi");
     axios({
       method: "POST",
       url: "http://10.0.2.2:5000/login",
@@ -39,7 +39,7 @@ const AuthScreen = ({ navigation }) => {
     })
       .then(({ status, data }) => {
         if (status === 200) {
-          console.log(data)
+          console.log(data);
           // AsyncStorage.setItem("token", data.token);
           Alert.alert("Success", "You are successfully logged in!");
           setFormState({ email: "", username: "", password: "" });
