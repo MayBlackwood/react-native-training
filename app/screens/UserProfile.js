@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, Text, SafeAreaView } from "react-native";
 
 const UserProfile = (props) => {
-  console.log(props.navigation)
   return (
     <SafeAreaView style={styles.container}>
       <Text>This is your Profile!</Text>
