@@ -3,37 +3,55 @@ import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { Button } from "react-native-elements";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getUser } from "./../store/actions/UserActions";
-
-const Home = ({ navigation }) => {
-  const handleGoToButtonsClick = (pathName) => {
-    navigation.navigate(pathName);
-  };
-
-  return (
-    <SafeAreaView style={styles.container}>
-      <Text>Do you have profile? Log In or Sign Up!</Text>
-      <View style={styles.buttonContainer}>
-        <Button
-          buttonStyle={styles.button}
-          title="Log In"
-          onPress={() => handleGoToButtonsClick("Authorization")}
-        />
-        <Button
-          title="Sign Up"
-          onPress={() => handleGoToButtonsClick("SignUpPage")}
-        />
-      </View>
-    </SafeAreaView>
-  );
-};
+import { logInUser } from "./../store/actions/UserActions";
 
 const mapStateToProps = ({ user }) => {
   return { userInfo: user };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ getUser }, dispatch);
+  return bindActionCreators({ logInUser }, dispatch);
+};
+
+const Home = ({ logInUser, userInfo, navigation }) => {
+  const handleGoToButtonsClick = (pathName) => {
+    navigation.navigate(pathName);
+  };
+
+  const handleLoginUser = () => {
+    logInUser({ id: 2 });
+    console.log(userInfo);
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      {userInfo.isLogged && (
+        <View>
+          <Text>Welcome Home!</Text>
+        </View>
+      )}
+      {!userInfo.isLogged && (
+        <View style={styles.buttonContainer}>
+          <Text style={{ textAlign: "center", marginBottom: 10 }}>
+            Do you have profile? Log In or Sign Up!
+          </Text>
+          <View>
+            <Button
+              buttonStyle={styles.button}
+              title="Log In"
+              onPress={() => handleGoToButtonsClick("Authorization")}
+            />
+            <Button
+              buttonStyle={styles.button}
+              title="Sign Up"
+              onPress={() => handleGoToButtonsClick("SignUpPage")}
+            />
+            <Button title="Get Users Info" onPress={handleLoginUser} />
+          </View>
+        </View>
+      )}
+    </SafeAreaView>
+  );
 };
 
 const styles = StyleSheet.create({

@@ -1,3 +1,5 @@
+import { USER_LOGGED, USER_LOGOUT } from "./../types";
+
 const INITIAL_STATE = {
   isLogged: false,
   userInfo: {},
@@ -6,7 +8,9 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case USER_LOGGED:
-      const { isLogged, userInfo } = state;
+      const { isLogged, userInfo } = action.payload;
+      console.log(isLogged);
+      console.log(userInfo);
       return {
         ...state,
         isLogged,
@@ -14,7 +18,6 @@ export default (state = INITIAL_STATE, action) => {
       };
 
     case USER_LOGOUT:
-      const { isLogged, userInfo } = state;
       return {
         ...state,
         isLogged,

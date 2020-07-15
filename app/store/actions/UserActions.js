@@ -1,8 +1,9 @@
-import { USER_LOGGED, USER_LOGGED, USER_LOGOUT } from "./../types";
+import { USER_LOGGED, USER_LOGOUT } from "./../types";
 import axios from "axios";
 
 export const logInUser = ({ id }) => async (dispatch) => {
   console.log("login");
+  console.log(id);
 
   const result = await axios({
     method: "GET",
@@ -12,11 +13,13 @@ export const logInUser = ({ id }) => async (dispatch) => {
     },
   });
 
+  console.log(result.data[0]);
+
   dispatch({
     type: USER_LOGGED,
     payload: {
       isLogged: true,
-      userInfo: result,
+      userInfo: result.data[0],
     },
   });
 };
