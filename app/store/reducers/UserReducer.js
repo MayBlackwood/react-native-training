@@ -9,8 +9,6 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case USER_LOGGED:
       const { isLogged, userData } = action.payload;
-      console.log(isLogged);
-      console.log(userData);
       return {
         ...state,
         isLogged,
@@ -18,11 +16,7 @@ export default (state = INITIAL_STATE, action) => {
       };
 
     case USER_LOGOUT:
-      return {
-        ...state,
-        isLogged,
-        userData,
-      };
+      return INITIAL_STATE;
 
     default:
       return state;

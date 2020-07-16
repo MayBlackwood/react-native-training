@@ -26,9 +26,5 @@ export const logOutUser = () => (dispatch) => {
   console.log('logout');
   dispatch({
     type: USER_LOGOUT,
-    payload: {
-      isLogged: false,
-      userData: {},
-    },
   });
 };

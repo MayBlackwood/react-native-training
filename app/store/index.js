@@ -7,15 +7,15 @@ import AsyncStorage from "@react-native-community/async-storage";
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  whitelist: ["UserReducer"],
+  whitelist: ["user"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = createStore(persistedReducer, applyMiddleware(thunk));
 
-store.subscribe(() => {
-  console.log("subscribe", store.getState());
-});
+// store.subscribe(() => {
+//   console.log("subscribe", store.getState());
+// });
 
 export default store;
