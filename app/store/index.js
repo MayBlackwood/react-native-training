@@ -14,8 +14,4 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = createStore(persistedReducer, applyMiddleware(thunk));
 
-// store.subscribe(() => {
-//   console.log("subscribe", store.getState());
-// });
-
 export default store;

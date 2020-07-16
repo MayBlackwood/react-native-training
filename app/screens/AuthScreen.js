@@ -1,56 +1,34 @@
 import React, { useState } from "react";
-import axios from "axios";
-import {
-  SafeAreaView,
-  Alert,
-  StyleSheet,
-  Text,
-  View,
-  AsyncStorage,
-} from "react-native";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { logInUser } from "./../store/actions/UserActions";
+
+import { SafeAreaView, Alert, StyleSheet, View } from "react-native";
 import CustomButton from "./../components/CustomButton";
 import Input from "./../components/Input";
 
-const AuthScreen = ({ navigation }) => {
+const mapStateToProps = ({ user }) => {
+  return { data: user };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ logInUser }, dispatch);
+};
+
+const AuthScreen = ({ navigation, logInUser, data }) => {
   const [formState, setFormState] = useState({
-    email: "",
     username: "",
     password: "",
   });
 
-  const { email, username, password } = formState;
+  const { username, password } = formState;
 
   const handleFormChange = (e, name) => {
     setFormState({ ...formState, [name]: e.nativeEvent.text });
   };
 
-  const logInUser = () => {
-    console.log("hi");
-    axios({
-      method: "POST",
-      url: "http://10.0.2.2:5000/login",
-      data: {
-        username: username,
-        password: password,
-      },
-      header: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then(({ status, data }) => {
-        if (status === 200) {
-          console.log(data);
-          // AsyncStorage.setItem("token", data.token);
-          Alert.alert("Success", "You are successfully logged in!");
-          setFormState({ email: "", username: "", password: "" });
-          navigation.navigate("UserProfile");
-        } else {
-          Alert.alert("Error", "Check the data.");
-        }
-      })
-      .catch((error) => {
-        throw error;
-      });
+  const handleLogInButton = () => {
+    logInUser(username, password, navigation);
   };
 
   return (
@@ -73,12 +51,12 @@ const AuthScreen = ({ navigation }) => {
           password={true}
         />
       </View>
-      <CustomButton title="Log In" onPress={logInUser} />
+      <CustomButton title="Log In" onPress={handleLogInButton} />
     </SafeAreaView>
   );
 };
 
-export default AuthScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen);
 
 const styles = StyleSheet.create({
   container: {

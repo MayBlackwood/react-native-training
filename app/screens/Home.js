@@ -4,11 +4,11 @@ import AuthUserHome from "./AuthUserHome";
 import NotAuthUserHome from "./NotAuthUserHome";
 
 const mapStateToProps = ({ user }) => {
-  return { userInfo: user };
+  return { data: user };
 };
 
-const Home = ({ userInfo, navigation }) => {
-  return userInfo.isLogged ? (
+const Home = ({ data, navigation }) => {
+  return !!data.token ? (
     <AuthUserHome />
   ) : (
     <NotAuthUserHome navigation={navigation} />

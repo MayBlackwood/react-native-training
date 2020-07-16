@@ -1,18 +1,18 @@
 import { USER_LOGGED, USER_LOGOUT } from "./../types";
 
 const INITIAL_STATE = {
-  isLogged: false,
-  userData: {},
+  token: '',
+  userId: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case USER_LOGGED:
-      const { isLogged, userData } = action.payload;
+      const { token, userId } = action.payload;
       return {
         ...state,
-        isLogged,
-        userData,
+        token,
+        userId,
       };
 
     case USER_LOGOUT:

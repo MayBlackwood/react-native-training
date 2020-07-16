@@ -1,30 +1,11 @@
 import React from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { logInUser } from "./../store/actions/UserActions";
 
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { Button } from "react-native-elements";
 
-const mapStateToProps = ({ user }) => {
-  return { userInfo: user };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ logInUser }, dispatch);
-};
-
-const NotAuthUserHome = ({ navigation, logInUser, userInfo }) => {
+const NotAuthUserHome = ({ navigation }) => {
   const handleGoToButtonsClick = (pathName) => {
     navigation.navigate(pathName);
-  };
-
-  const handleLoginUser = () => {
-    logInUser({ id: 2 });
-  };
-
-  const getStore = () => {
-    console.log(userInfo);
   };
 
   return (
@@ -40,23 +21,16 @@ const NotAuthUserHome = ({ navigation, logInUser, userInfo }) => {
             onPress={() => handleGoToButtonsClick("Authorization")}
           />
           <Button
-            buttonStyle={styles.button}
             title="Sign Up"
             onPress={() => handleGoToButtonsClick("SignUpPage")}
           />
-          <Button
-            buttonStyle={styles.button}
-            title="Get Users Info"
-            onPress={handleLoginUser}
-          />
-          <Button title="Get Store" onPress={getStore} />
         </View>
       </View>
     </SafeAreaView>
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NotAuthUserHome);
+export default NotAuthUserHome;
 
 const styles = StyleSheet.create({
   container: {

@@ -7,21 +7,16 @@ import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { Button } from "react-native-elements";
 
 const mapStateToProps = ({ user }) => {
-  return { userInfo: user };
+  return { data: user };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ logOutUser }, dispatch);
 };
 
-const AuthUserHome = ({ logOutUser, userInfo }) => {
+const AuthUserHome = ({ logOutUser }) => {
   const logOut = () => {
-    console.log("Home logout");
     logOutUser();
-  };
-
-  const getStore = () => {
-    console.log(userInfo);
   };
 
   return (
@@ -29,7 +24,6 @@ const AuthUserHome = ({ logOutUser, userInfo }) => {
       <View style={styles.buttonContainer}>
         <Text>Welcome Home!</Text>
         <Button buttonStyle={styles.button} title="Log Out" onPress={logOut} />
-        <Button buttonStyle={styles.button} title="Get" onPress={getStore} />
       </View>
     </SafeAreaView>
   );
