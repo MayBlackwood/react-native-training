@@ -15,37 +15,35 @@ const Stack = createStackNavigator();
 
 const persistedStore = persistStore(store);
 
-const App = () => {
-  return (
-    <Provider store={store}>
-      <PersistGate persistor={persistedStore} loading={null}>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Home"
-              component={Home}
-              options={{ title: "Home Page" }}
-            />
-            <Stack.Screen
-              name="Authorization"
-              component={AuthScreen}
-              title={{ title: "Authorization" }}
-            />
-            <Stack.Screen
-              name="SignUpPage"
-              component={SignUpScreen}
-              title={{ title: "Sign Up Page" }}
-            />
-            <Stack.Screen
-              name="UserProfile"
-              component={UserProfile}
-              title={{ title: "User Profile" }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </PersistGate>
-    </Provider>
-  );
-};
+const App = () => (
+  <Provider store={store}>
+    <PersistGate persistor={persistedStore} loading={null}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{ title: "Home Page" }}
+          />
+          <Stack.Screen
+            name="Authorization"
+            component={AuthScreen}
+            title={{ title: "Authorization" }}
+          />
+          <Stack.Screen
+            name="SignUpPage"
+            component={SignUpScreen}
+            title={{ title: "Sign Up Page" }}
+          />
+          <Stack.Screen
+            name="UserProfile"
+            component={UserProfile}
+            title={{ title: "User Profile" }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PersistGate>
+  </Provider>
+);
 
 export default App;

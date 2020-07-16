@@ -1,13 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, SafeAreaView } from "react-native";
 
-const UserProfile = (props) => {
-  return (
-    <SafeAreaView style={styles.container}>
-      <Text>This is your Profile!</Text>
-    </SafeAreaView>
-  );
-};
+const UserProfile = () => (
+  <SafeAreaView style={styles.container}>
+    <Text>This is your Profile!</Text>
+  </SafeAreaView>
+);
 
 export default UserProfile;
 
