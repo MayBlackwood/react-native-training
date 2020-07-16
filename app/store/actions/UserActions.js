@@ -13,8 +13,6 @@ export const logInUser = ({ id }) => async (dispatch) => {
     },
   });
 
-  console.log(result.data[0]);
-
   dispatch({
     type: USER_LOGGED,
     payload: {
@@ -24,7 +22,8 @@ export const logInUser = ({ id }) => async (dispatch) => {
   });
 };
 
-export const logOutUser = (dispatch) => {
+export const logOutUser = () => (dispatch) => {
+  console.log('logout');
   dispatch({
     type: USER_LOGOUT,
     payload: {

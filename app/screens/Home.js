@@ -3,17 +3,17 @@ import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { Button } from "react-native-elements";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { logInUser } from "./../store/actions/UserActions";
+import { logInUser, logOutUser } from "./../store/actions/UserActions";
 
-const mapStateToProps = ({ user }) => {
-  return { userInfo: user };
+const mapStateToProps = ({ UserReducer }) => {
+  return { userInfo: UserReducer };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ logInUser }, dispatch);
+  return bindActionCreators({ logInUser, logOutUser }, dispatch);
 };
 
-const Home = ({ logInUser, userInfo, navigation }) => {
+const Home = ({ logInUser, logOutUser, userInfo, navigation }) => {
   const { userData, isLogged } = userInfo;
   const handleGoToButtonsClick = (pathName) => {
     navigation.navigate(pathName);
@@ -23,6 +23,15 @@ const Home = ({ logInUser, userInfo, navigation }) => {
     logInUser({ id: 2 });
   };
 
+  const getStore = () => {
+    console.log(userInfo);
+  };
+
+  const logOut = () => {
+    console.log("Home logout");
+    logOutUser();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       {isLogged && (
@@ -30,6 +39,16 @@ const Home = ({ logInUser, userInfo, navigation }) => {
           <Text>Welcome Home!</Text>
           <Text>{isLogged.toString()}</Text>
           <Text>{userData.email}</Text>
+          <Button
+            buttonStyle={styles.button}
+            title="Get Store"
+            onPress={getStore}
+          />
+          <Button
+            buttonStyle={styles.button}
+            title="Log Out"
+            onPress={logOut}
+          />
         </View>
       )}
       {!isLogged && (
@@ -48,7 +67,12 @@ const Home = ({ logInUser, userInfo, navigation }) => {
               title="Sign Up"
               onPress={() => handleGoToButtonsClick("SignUpPage")}
             />
-            <Button title="Get Users Info" onPress={handleLoginUser} />
+            <Button
+              buttonStyle={styles.button}
+              title="Get Users Info"
+              onPress={handleLoginUser}
+            />
+            <Button title="Get Store" onPress={getStore} />
           </View>
         </View>
       )}
