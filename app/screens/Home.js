@@ -14,23 +14,25 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const Home = ({ logInUser, userInfo, navigation }) => {
+  const { userData, isLogged } = userInfo;
   const handleGoToButtonsClick = (pathName) => {
     navigation.navigate(pathName);
   };
 
   const handleLoginUser = () => {
     logInUser({ id: 2 });
-    console.log(userInfo);
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      {userInfo.isLogged && (
+      {isLogged && (
         <View>
           <Text>Welcome Home!</Text>
+          <Text>{isLogged.toString()}</Text>
+          <Text>{userData.email}</Text>
         </View>
       )}
-      {!userInfo.isLogged && (
+      {!isLogged && (
         <View style={styles.buttonContainer}>
           <Text style={{ textAlign: "center", marginBottom: 10 }}>
             Do you have profile? Log In or Sign Up!

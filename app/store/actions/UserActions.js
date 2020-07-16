@@ -19,7 +19,7 @@ export const logInUser = ({ id }) => async (dispatch) => {
     type: USER_LOGGED,
     payload: {
       isLogged: true,
-      userInfo: result.data[0],
+      userData: result.data[0],
     },
   });
 };
@@ -29,7 +29,7 @@ export const logOutUser = (dispatch) => {
     type: USER_LOGOUT,
     payload: {
       isLogged: false,
-      userInfo: {},
+      userData: {},
     },
   });
 };
