@@ -1,18 +1,15 @@
 import React from "react";
-import { connect } from "react-redux";
-import AuthUserHome from "./AuthUserHome";
-import NotAuthUserHome from "./NotAuthUserHome";
+import { useSelector } from "react-redux";
+import WelcomeScreen from "./WelcomeScreen";
+import EntryAppScreen from "./EntryAppScreen";
 
-const mapStateToProps = ({ user }) => {
-  return { data: user };
-};
-
-const Home = ({ data, navigation }) => {
+const Home = ({ navigation }) => {
+  const data = useSelector(({ user }) => user);
   return !!data.token ? (
-    <AuthUserHome />
+    <WelcomeScreen />
   ) : (
-    <NotAuthUserHome navigation={navigation} />
+    <EntryAppScreen navigation={navigation} />
   );
 };
 
-export default connect(mapStateToProps)(Home);
+export default Home;

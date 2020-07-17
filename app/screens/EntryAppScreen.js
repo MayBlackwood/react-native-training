@@ -3,7 +3,7 @@ import React from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { Button } from "react-native-elements";
 
-const NotAuthUserHome = ({ navigation }) => {
+const EntryAppScreen = ({ navigation }) => {
   const handleGoToButtonsClick = (pathName) => {
     navigation.navigate(pathName);
   };
@@ -30,7 +30,7 @@ const NotAuthUserHome = ({ navigation }) => {
   );
 };
 
-export default NotAuthUserHome;
+export default EntryAppScreen;
 
 const styles = StyleSheet.create({
   container: {

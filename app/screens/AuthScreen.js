@@ -1,21 +1,14 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { useDispatch } from "react-redux";
 import { logInUser } from "./../store/actions/UserActions";
 
-import { SafeAreaView, Alert, StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import CustomButton from "./../components/CustomButton";
 import Input from "./../components/Input";
 
-const mapStateToProps = ({ user }) => {
-  return { data: user };
-};
+const AuthScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ logInUser }, dispatch);
-};
-
-const AuthScreen = ({ navigation, logInUser, data }) => {
   const [formState, setFormState] = useState({
     username: "",
     password: "",
@@ -28,7 +21,7 @@ const AuthScreen = ({ navigation, logInUser, data }) => {
   };
 
   const handleLogInButton = () => {
-    logInUser(username, password, navigation);
+    dispatch(logInUser(username, password, navigation));
   };
 
   return (
@@ -56,7 +49,7 @@ const AuthScreen = ({ navigation, logInUser, data }) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen);
+export default AuthScreen;
 
 const styles = StyleSheet.create({
   container: {

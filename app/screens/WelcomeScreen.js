@@ -1,22 +1,14 @@
 import React from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { logOutUser } from "./../store/actions/UserActions";
+import { useDispatch } from "react-redux";
+import { logOutUser } from "../store/actions/UserActions";
 
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { Button } from "react-native-elements";
 
-const mapStateToProps = ({ user }) => {
-  return { data: user };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ logOutUser }, dispatch);
-};
-
-const AuthUserHome = ({ logOutUser }) => {
+const WelcomeScreen = () => {
+  const dispatch = useDispatch();
   const logOut = () => {
-    logOutUser();
+    dispatch(logOutUser());
   };
 
   return (
@@ -29,7 +21,7 @@ const AuthUserHome = ({ logOutUser }) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthUserHome);
+export default WelcomeScreen;
 
 const styles = StyleSheet.create({
   container: {
