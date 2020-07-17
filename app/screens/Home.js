@@ -6,7 +6,7 @@ import EntryAppScreen from "./EntryAppScreen";
 const Home = ({ navigation }) => {
   const data = useSelector(({ user }) => user);
   return !!data.token ? (
-    <WelcomeScreen />
+    <WelcomeScreen navigation={navigation} />
   ) : (
     <EntryAppScreen navigation={navigation} />
   );

@@ -28,17 +28,17 @@ const App = () => (
           <Stack.Screen
             name="Authorization"
             component={AuthScreen}
-            title={{ title: "Authorization" }}
+            options={{ title: "Authorization" }}
           />
           <Stack.Screen
             name="SignUpPage"
             component={SignUpScreen}
-            title={{ title: "Sign Up Page" }}
+            options={{ title: "Sign Up" }}
           />
           <Stack.Screen
             name="UserProfile"
             component={UserProfile}
-            title={{ title: "User Profile" }}
+            options={{ title: "Profile", headerLeft: null }}
           />
         </Stack.Navigator>
       </NavigationContainer>
