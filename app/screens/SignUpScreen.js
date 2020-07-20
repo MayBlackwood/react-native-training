@@ -129,7 +129,7 @@ const SignUpScreen = ({ navigation }) => {
                       onChangeText={handleChange(value)}
                       placeholder={title}
                       secureTextEntry={
-                        value === ("password" || "passwordConfirmation")
+                        value === "password" || "passwordConfirmation"
                           ? true
                           : false
                       }
