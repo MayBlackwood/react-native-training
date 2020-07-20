@@ -26,42 +26,45 @@ const AuthScreen = ({ navigation, errors }) => {
     dispatch(logInUser(username, password, navigation));
   };
 
-  const showErrors = (errors) => {
-    console.log(errors);
-  };
-
   return (
     <Formik
       initialValues={{ username: "", password: "" }}
       validationSchema={LogInSchema}
       onSubmit={(values) => handleLogInButton(values)}
     >
-      {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
+      {({
+        handleChange,
+        handleSubmit,
+        values: { username, password },
+        errors,
+        touched,
+      }) => (
         <SafeAreaView style={styles.container}>
           <View style={{ width: "70%" }}>
             <TextInput
-              value={values.username}
+              value={username}
               onChangeText={handleChange("username")}
               placeholder="Username"
-              selectionColor="blue"
               style={styles.textInput}
             />
-            <Text style={styles.errorText}>{errors.username}</Text>
+            {errors.username && touched.username ? (
+              <Text style={styles.errorText}>{errors.username}</Text>
+            ) : null}
             <TextInput
-              value={values.password}
+              value={password}
               onChangeText={handleChange("password")}
               placeholder="Password"
               secureTextEntry={true}
-              selectionColor="blue"
               style={styles.textInput}
             />
-            <Text style={styles.errorText}>{errors.password}</Text>
+            {errors.password && touched.password ? (
+              <Text style={styles.errorText}>{errors.password}</Text>
+            ) : null}
           </View>
           <Button
             title="Log In"
             onPress={handleSubmit}
-            style={{ width: "100%" }}
-            buttonStyle={styles.signUpButton}
+            buttonStyle={styles.logInButton}
           />
         </SafeAreaView>
       )}
@@ -83,14 +86,18 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 18,
     borderRadius: 6,
+    marginBottom: 15,
   },
-  signUpButton: {
+  logInButton: {
     textAlign: "center",
-    width: "80%",
-    paddingRight: "25%",
+    width: "100%",
+    paddingRight: "30%",
+    paddingTop: 10,
+    paddingBottom: 10,
     marginLeft: "auto",
     marginRight: "auto",
     marginBottom: 30,
+    marginTop: 30,
   },
   errorText: {
     color: "#C06C84",
