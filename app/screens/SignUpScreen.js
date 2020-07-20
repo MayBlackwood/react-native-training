@@ -53,19 +53,6 @@ const SignUpSchema = Yup.object().shape({
 const SignUpScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  // const handleButtonClick = ({
-  //   username,
-  //   firstName,
-  //   lastName,
-  //   email,
-  //   password,
-  //   description,
-  // }) => {
-  //   signUpUser(username, firstName, lastName, email, password, description);
-  //   // Alert.alert("Sign Up", "You are successfully signed up!");
-  //   // dispatch(logInUser(username, password, navigation));
-  // };
-
   const handleButtonClick = (values) => {
     signUpUser(values);
   };
