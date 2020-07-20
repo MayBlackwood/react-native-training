@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
 
 import {
   SafeAreaView,
@@ -14,7 +15,6 @@ import {
 } from "react-native";
 import { logInUser } from "./../store/actions/UserActions";
 import { Button } from "react-native-elements";
-import Axios from "axios";
 
 const SignUpSchema = Yup.object().shape({
   username: Yup.string()
@@ -53,17 +53,21 @@ const SignUpSchema = Yup.object().shape({
 const SignUpScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  const handleButtonClick = ({
-    username,
-    firstName,
-    lastName,
-    email,
-    password,
-    description,
-  }) => {
-    Alert.alert("Sign Up", "You are successfully signed up!");
-    signUpUser(username, firstName, lastName, email, password, description);
-    dispatch(logInUser(username, password, navigation));
+  // const handleButtonClick = ({
+  //   username,
+  //   firstName,
+  //   lastName,
+  //   email,
+  //   password,
+  //   description,
+  // }) => {
+  //   signUpUser(username, firstName, lastName, email, password, description);
+  //   // Alert.alert("Sign Up", "You are successfully signed up!");
+  //   // dispatch(logInUser(username, password, navigation));
+  // };
+
+  const handleButtonClick = (values) => {
+    signUpUser(values);
   };
 
   const signUpUser = async ({
@@ -74,7 +78,8 @@ const SignUpScreen = ({ navigation }) => {
     password,
     description,
   }) => {
-    await Axios({
+    console.log(username, firstName, lastName, email, password, description);
+    await axios({
       method: "POST",
       url: "http://10.0.2.2:5000/sign_up",
       data: {
@@ -86,9 +91,17 @@ const SignUpScreen = ({ navigation }) => {
         description,
       },
       header: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
-    });
+    })
+      .then(({ data: { message } }) => {
+        Alert.alert("Sign Up", `${message}`);
+        dispatch(logInUser(username, password, navigation));
+      })
+      .catch((error) => {
+        Alert.alert("Error", error.message);
+        return error;
+      });
   };
 
   return (
