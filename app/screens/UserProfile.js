@@ -1,10 +1,10 @@
-import React from "react";
-import { StyleSheet, Text, SafeAreaView } from "react-native";
-import { Button } from "react-native-elements";
+import React from 'react';
+import { StyleSheet, Text, SafeAreaView } from 'react-native';
+import { Button } from 'react-native-elements';
 
 const UserProfile = ({ navigation }) => {
   const handleButtonClick = () => {
-    navigation.navigate("Home");
+    navigation.navigate('Home');
   };
 
   return (
@@ -24,8 +24,8 @@ export default UserProfile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#F8B195",
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F8B195',
   },
 });

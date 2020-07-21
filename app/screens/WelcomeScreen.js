@@ -1,9 +1,11 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { logOutUser } from "../store/actions/UserActions";
+import React from 'react';
+import { useDispatch } from 'react-redux';
 
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
-import { Button } from "react-native-elements";
+import {
+  StyleSheet, Text, View, SafeAreaView,
+} from 'react-native';
+import { Button } from 'react-native-elements';
+import { logOutUser } from '../store/actions/UserActions';
 
 const WelcomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -12,13 +14,13 @@ const WelcomeScreen = ({ navigation }) => {
   };
 
   const goToButton = () => {
-    navigation.navigate("UserProfile");
+    navigation.navigate('UserProfile');
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.buttonContainer}>
-        <Text style={{ textAlign: "center" }}>Welcome Home!</Text>
+        <Text style={{ textAlign: 'center' }}>Welcome Home!</Text>
         <Button buttonStyle={styles.button} title="Log Out" onPress={logOut} />
         <Button
           buttonStyle={styles.button}
@@ -35,16 +37,16 @@ export default WelcomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonContainer: {
-    width: "50%",
-    height: "auto",
+    width: '50%',
+    height: 'auto',
     marginTop: 30,
   },
   button: {
-    backgroundColor: "#9198e5",
+    backgroundColor: '#9198e5',
     marginBottom: 10,
   },
 });

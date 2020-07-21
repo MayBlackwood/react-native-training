@@ -1,15 +1,15 @@
-import "react-native-gesture-handler";
-import React from "react";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/es/integration/react";
-import { persistStore } from "redux-persist";
-import AuthScreen from "./app/screens/AuthScreen";
-import Home from "./app/screens/Home";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import SignUpScreen from "./app/screens/SignUpScreen";
-import UserProfile from "./app/screens/UserProfile";
-import store from "./app/store/index";
+import 'react-native-gesture-handler';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/es/integration/react';
+import { persistStore } from 'redux-persist';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import AuthScreen from './app/screens/AuthScreen';
+import Home from './app/screens/Home';
+import SignUpScreen from './app/screens/SignUpScreen';
+import UserProfile from './app/screens/UserProfile';
+import store from './app/store/index';
 
 const Stack = createStackNavigator();
 
@@ -23,22 +23,22 @@ const App = () => (
           <Stack.Screen
             name="Home"
             component={Home}
-            options={{ title: "Home Page" }}
+            options={{ title: 'Home Page' }}
           />
           <Stack.Screen
             name="Authorization"
             component={AuthScreen}
-            options={{ title: "Authorization" }}
+            options={{ title: 'Authorization' }}
           />
           <Stack.Screen
             name="SignUpPage"
             component={SignUpScreen}
-            options={{ title: "Sign Up" }}
+            options={{ title: 'Sign Up' }}
           />
           <Stack.Screen
             name="UserProfile"
             component={UserProfile}
-            options={{ title: "Profile", headerLeft: null }}
+            options={{ title: 'Profile', headerLeft: null }}
           />
         </Stack.Navigator>
       </NavigationContainer>
