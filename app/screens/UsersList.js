@@ -1,48 +1,34 @@
-import React, { useEffect } from 'react';
-import { SafeAreaView, Text, Button, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+import DraggableFlatList from 'react-native-draggable-flatlist';
 import { getAllUsers } from '../store/actions/UsersActions';
+import ListItem from '../components/ListItem';
 
 const UsersList = () => {
-  const users = useSelector(({ users }) => users);
+  const users = useSelector(({ users: { users } }) => users);
   const dispatch = useDispatch();
+  const [data, setData] = useState(users);
 
   useEffect(() => {
     dispatch(getAllUsers());
+    setData(users);
   }, []);
 
-  const getState = () => {
-    console.log('State');
-    console.log(users);
-  };
+  const renderItem = ({ item, index, drag, isActive }) => (
+    <ListItem item={item} index={index} drag={drag} isActive={isActive} />
+  );
 
   return (
-    <SafeAreaView>
-      <Text>Users List</Text>
-      <Button
-        buttonStyle={styles.button}
-        title="Get State"
-        onPress={getState}
+    <View style={{ flex: 1 }}>
+      <DraggableFlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => `draggable-item-${item.id}`}
+        onDragEnd={({ data }) => setData(data)}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
 export default UsersList;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonContainer: {
-    width: '50%',
-    height: 'auto',
-    marginTop: 30,
-  },
-  button: {
-    backgroundColor: '#9198e5',
-    marginBottom: 10,
-  },
-});

@@ -22,6 +22,6 @@ export const getAllUsers = () => async (dispatch) => {
     });
 };
 
-export const logOutUser = () => (dispatch) => {
+export const updateUsers = () => (dispatch) => {
   dispatch({});
 };
