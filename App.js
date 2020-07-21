@@ -9,6 +9,7 @@ import AuthScreen from './app/screens/AuthScreen';
 import Home from './app/screens/Home';
 import SignUpScreen from './app/screens/SignUpScreen';
 import UserProfile from './app/screens/UserProfile';
+import UsersList from './app/screens/UsersList';
 import store from './app/store/index';
 
 const Stack = createStackNavigator();
@@ -39,6 +40,11 @@ const App = () => (
             name="UserProfile"
             component={UserProfile}
             options={{ title: 'Profile', headerLeft: null }}
+          />
+          <Stack.Screen
+            name="UsersList"
+            component={UsersList}
+            options={{ title: 'All Users' }}
           />
         </Stack.Navigator>
       </NavigationContainer>

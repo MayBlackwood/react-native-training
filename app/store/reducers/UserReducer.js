@@ -1,4 +1,4 @@
-import { USER_LOGGED, USER_LOGOUT } from "./../types";
+import { USER_LOGGED, USER_LOGOUT } from '../types';
 
 const INITIAL_STATE = {
   token: '',

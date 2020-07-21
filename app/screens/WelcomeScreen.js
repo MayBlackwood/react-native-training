@@ -1,9 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import {
-  StyleSheet, Text, View, SafeAreaView,
-} from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { Button } from 'react-native-elements';
 import { logOutUser } from '../store/actions/UserActions';
 
@@ -13,8 +11,8 @@ const WelcomeScreen = ({ navigation }) => {
     dispatch(logOutUser());
   };
 
-  const goToButton = () => {
-    navigation.navigate('UserProfile');
+  const goToButton = (path) => {
+    navigation.navigate(path);
   };
 
   return (
@@ -25,7 +23,12 @@ const WelcomeScreen = ({ navigation }) => {
         <Button
           buttonStyle={styles.button}
           title="User Profile"
-          onPress={goToButton}
+          onPress={() => goToButton('UserProfile')}
+        />
+        <Button
+          buttonStyle={styles.button}
+          title="Users List"
+          onPress={() => goToButton('UsersList')}
         />
       </View>
     </SafeAreaView>
