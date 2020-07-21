@@ -4,21 +4,22 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 import {
-  SafeAreaView, StyleSheet, View, TextInput, Text,
+  SafeAreaView, StyleSheet, View,
 } from 'react-native';
 
 import { Button } from 'react-native-elements';
 import { logInUser } from '../store/actions/UserActions';
+import FormInput from '../components/FormInput';
 
 const LogInSchema = Yup.object().shape({
   username: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
-    .required('Required'),
+    .required('* Required'),
   password: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
-    .required('Required'),
+    .required('* Required'),
 });
 
 const AuthScreen = ({ navigation }) => {
@@ -35,33 +36,21 @@ const AuthScreen = ({ navigation }) => {
       onSubmit={(values) => handleLogInButton(values)}
     >
       {({
-        handleChange,
-        handleSubmit,
-        values: { username, password },
-        errors,
-        touched,
+        handleChange, handleSubmit, values, errors, touched,
       }) => (
         <SafeAreaView style={styles.container}>
           <View style={{ width: '70%' }}>
-            <TextInput
-              value={username}
-              onChangeText={handleChange('username')}
-              placeholder="Username"
-              style={styles.textInput}
-            />
-            {errors.username && touched.username ? (
-              <Text style={styles.errorText}>{errors.username}</Text>
-            ) : null}
-            <TextInput
-              value={password}
-              onChangeText={handleChange('password')}
-              placeholder="Password"
-              secureTextEntry
-              style={styles.textInput}
-            />
-            {errors.password && touched.password ? (
-              <Text style={styles.errorText}>{errors.password}</Text>
-            ) : null}
+            {logInFormConfig.map(({ value, title }) => (
+              <FormInput
+                title={title}
+                value={value}
+                handleChange={handleChange}
+                values={values}
+                errors={errors}
+                touched={touched}
+                key={value}
+              />
+            ))}
           </View>
           <Button
             title="Log In"
@@ -108,3 +97,8 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
 });
+
+const logInFormConfig = [
+  { value: 'username', title: 'Username' },
+  { value: 'password', title: 'Password' },
+];
