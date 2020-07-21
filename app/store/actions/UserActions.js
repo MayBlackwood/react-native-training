@@ -14,12 +14,10 @@ export const logInUser = (username, password, navigation) => async (
       password,
     },
     header: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
     },
   })
-    .then((res) => {
-      const { token, id } = res.data;
-
+    .then(({ data: { token, id, message } }) => {
       dispatch({
         type: USER_LOGGED,
         payload: {
@@ -27,18 +25,12 @@ export const logInUser = (username, password, navigation) => async (
           userId: id,
         },
       });
+      Alert.alert("Successful", message);
+      navigation.navigate("UserProfile");
     })
-    .then(
-      () => {
-        Alert.alert("Success", "You are successfully logged in!");
-        navigation.navigate("UserProfile");
-      },
-      () => {
-        Alert.alert("Error", "Check the data.");
-      }
-    )
     .catch((error) => {
-      throw error;
+      Alert.alert("Error", error.response.data.message);
+      return error.response;
     });
 };
 

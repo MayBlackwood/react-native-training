@@ -1,83 +1,156 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, View, Alert } from "react-native";
-import Input from "./../components/Input";
+import { useDispatch } from "react-redux";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
+
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Alert,
+  ScrollView,
+  TextInput,
+  Text,
+} from "react-native";
+import { logInUser } from "./../store/actions/UserActions";
 import { Button } from "react-native-elements";
 
-const SignUpScreen = () => {
-  const [authInfo, setAuthInfo] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    repeatPassword: "",
-    description: "",
-  });
+const SignUpSchema = Yup.object().shape({
+  username: Yup.string()
+    .required("* Required")
+    .min(2, "Too Short!")
+    .max(40, "Too Long!")
+    .matches(/[a-zA-Z]/, "Username can only contain Latin letters."),
+  firstName: Yup.string()
+    .required("* Required")
+    .min(2, "Too Short!")
+    .max(40, "Too Long!")
+    .matches(/[a-zA-Z]/, "First name can only contain Latin letters."),
+  lastName: Yup.string()
+    .required("* Required")
+    .min(2, "Too Short!")
+    .max(40, "Too Long!")
+    .matches(/[a-zA-Z]/, "Last name can only contain Latin letters."),
+  email: Yup.string()
+    .required("* Required")
+    .min(2, "Too Short!")
+    .max(40, "Too Long!")
+    .email("Invalid email"),
+  password: Yup.string()
+    .required("Password is required")
+    .required("* Required")
+    .min(2, "Too Short!")
+    .max(40, "Too Long!"),
+  passwordConfirmation: Yup.string()
+    .required("* Required")
+    .min(2, "Too Short!")
+    .max(40, "Too Long!")
+    .oneOf([Yup.ref("password"), null], "Passwords must match"),
+  description: Yup.string().min(2, "Too Short!").max(40, "Too Long!"),
+});
 
-  const {
+const SignUpScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+
+  const handleButtonClick = (values) => {
+    signUpUser(values);
+  };
+
+  const signUpUser = async ({
+    username,
     firstName,
     lastName,
     email,
     password,
-    repeatPassword,
     description,
-  } = authInfo;
-
-  const handleFormChange = (e, name) => {
-    setAuthInfo({ ...authInfo, [name]: e.nativeEvent.text });
-  };
-
-  const handleButtonClick = () => {
-    Alert.alert("Sign Up", "You are successfully signed up!");
+  }) => {
+    console.log(username, firstName, lastName, email, password, description);
+    await axios({
+      method: "POST",
+      url: "http://10.0.2.2:5000/sign_up",
+      data: {
+        username,
+        firstName,
+        lastName,
+        email,
+        password,
+        description,
+      },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    })
+      .then(({ data: { message } }) => {
+        Alert.alert("Sign Up", `${message}`);
+        dispatch(logInUser(username, password, navigation));
+      })
+      .catch((error) => {
+        Alert.alert("Error", error.message);
+        return error;
+      });
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ width: "80%" }}>
-        <Input
-          placeholder="First Name"
-          value={firstName}
-          onHandleChange={(e) => handleFormChange(e, "firstName")}
-          label="First Name"
-        />
-        <Input
-          placeholder="Last Name"
-          value={lastName}
-          onHandleChange={(e) => handleFormChange(e, "lastName")}
-          label="Last Name"
-        />
-        <Input
-          placeholder="Email"
-          value={email}
-          onHandleChange={(e) => handleFormChange(e, "email")}
-          label="Email"
-        />
-        <Input
-          placeholder="Password"
-          value={password}
-          onHandleChange={(e) => handleFormChange(e, "password")}
-          label="Password"
-          secureTextEntry={true}
-        />
-        <Input
-          placeholder="Repeat Password"
-          value={repeatPassword}
-          onHandleChange={(e) => handleFormChange(e, "repeatPassword")}
-          label="Password"
-          secureTextEntry={true}
-        />
-        <Input
-          placeholder="Description"
-          value={description}
-          onHandleChange={(e) => handleFormChange(e, "description")}
-          label="Description"
-        />
-      </View>
-      <Button
-        title="Sign Up"
-        onPress={handleButtonClick}
-        buttonStyle={styles.signUpButton}
-      />
-    </SafeAreaView>
+    <Formik
+      initialValues={{
+        username: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        passwordConfirmation: "",
+        description: "",
+      }}
+      validationSchema={SignUpSchema}
+      onSubmit={(values) => handleButtonClick(values)}
+    >
+      {({ handleChange, handleSubmit, values, errors, touched }) => (
+        <SafeAreaView style={styles.container}>
+          <ScrollView style={{ width: "100%" }}>
+            <View
+              style={{
+                width: "80%",
+                marginLeft: "auto",
+                marginRight: "auto",
+                marginTop: 30,
+              }}
+            >
+              {signUpFormConfig.map(({ value, title }, index) => {
+                return (
+                  <View
+                    style={{
+                      marginBottom: 20,
+                    }}
+                    key={index}
+                  >
+                    <TextInput
+                      value={values[value]}
+                      onChangeText={handleChange(value)}
+                      placeholder={title}
+                      secureTextEntry={
+                        value === "password" || "passwordConfirmation"
+                          ? true
+                          : false
+                      }
+                      style={styles.textInput}
+                    />
+                    {errors[value] && touched[value] ? (
+                      <Text style={styles.errorText}>{errors[value]}</Text>
+                    ) : null}
+                  </View>
+                );
+              })}
+            </View>
+            <Button
+              title="Sign Up"
+              onPress={handleSubmit}
+              buttonStyle={styles.signUpButton}
+            />
+          </ScrollView>
+        </SafeAreaView>
+      )}
+    </Formik>
   );
 };
 
@@ -90,7 +163,33 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   signUpButton: {
-    paddingLeft: 30,
-    paddingRight: 30,
+    width: "80%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginBottom: 30,
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  textInput: {
+    borderWidth: 1,
+    borderColor: "#355C7D",
+    padding: 10,
+    fontSize: 18,
+    borderRadius: 6,
+  },
+  errorText: {
+    color: "#C06C84",
+    fontWeight: "bold",
+    marginTop: 6,
   },
 });
+
+const signUpFormConfig = [
+  { value: "username", title: "Username" },
+  { value: "firstName", title: "First Name" },
+  { value: "lastName", title: "Last Name" },
+  { value: "email", title: "E-mail" },
+  { value: "password", title: "Password" },
+  { value: "passwordConfirmation", title: "Confirm Password" },
+  { value: "description", title: "Description" },
+];
