@@ -10,11 +10,10 @@ import {
   View,
   Alert,
   ScrollView,
-  TextInput,
-  Text,
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import { logInUser } from '../store/actions/UserActions';
+import FormInput from '../components/FormInput';
 
 const SignUpSchema = Yup.object().shape({
   username: Yup.string()
@@ -118,25 +117,15 @@ const SignUpScreen = ({ navigation }) => {
               }}
             >
               {signUpFormConfig.map(({ value, title }) => (
-                <View
-                  style={{
-                    marginBottom: 20,
-                  }}
+                <FormInput
+                  title={title}
+                  value={value}
+                  handleChange={handleChange}
+                  values={values}
+                  errors={errors}
+                  touched={touched}
                   key={value}
-                >
-                  <TextInput
-                    value={values[value]}
-                    onChangeText={handleChange(value)}
-                    placeholder={title}
-                    secureTextEntry={
-                      !!(value === 'password' || 'passwordConfirmation')
-                    }
-                    style={styles.textInput}
-                  />
-                  {errors[value] && touched[value] ? (
-                    <Text style={styles.errorText}>{errors[value]}</Text>
-                  ) : null}
-                </View>
+                />
               ))}
             </View>
             <Button
