@@ -8,10 +8,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 import AuthScreen from './app/screens/AuthScreen';
 import Home from './app/screens/Home';
 import SignUpScreen from './app/screens/SignUpScreen';
+import EditUserPage from './app/screens/EditUserPage';
+import CurrentUserProfile from './app/screens/CurrentUserProfile';
 import UserProfile from './app/screens/UserProfile';
 import UsersList from './app/screens/UsersList';
 import store from './app/store/index';
-import Test from './app/screens/Test';
 
 const Stack = createStackNavigator();
 
@@ -38,8 +39,8 @@ const App = () => (
             options={{ title: 'Sign Up' }}
           />
           <Stack.Screen
-            name="UserProfile"
-            component={UserProfile}
+            name="CurrentUserProfile"
+            component={CurrentUserProfile}
             options={{ title: 'Profile', headerLeft: null }}
           />
           <Stack.Screen
@@ -48,9 +49,14 @@ const App = () => (
             options={{ title: 'All Users' }}
           />
           <Stack.Screen
-            name="Test"
-            component={Test}
-            options={{ title: 'Test' }}
+            name="UserProfile"
+            component={UserProfile}
+            options={{ title: 'User Profile' }}
+          />
+          <Stack.Screen
+            name="EditUserPage"
+            component={EditUserPage}
+            options={{ title: 'Edit User' }}
           />
         </Stack.Navigator>
       </NavigationContainer>

@@ -1,8 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
-import { Button } from 'react-native-elements';         
+import {
+  StyleSheet, Text, View, SafeAreaView,
+} from 'react-native';
+import { Button } from 'react-native-elements';
 import { logOutUser } from '../store/actions/UserActions';
 
 const WelcomeScreen = ({ navigation }) => {
@@ -23,7 +25,7 @@ const WelcomeScreen = ({ navigation }) => {
         <Button
           buttonStyle={styles.button}
           title="User Profile"
-          onPress={() => goToButton('UserProfile')}
+          onPress={() => goToButton('CurrentUserProfile')}
         />
         <Button
           buttonStyle={styles.button}

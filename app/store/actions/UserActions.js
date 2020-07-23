@@ -17,7 +17,11 @@ export const logInUser = (username, password, navigation) => async (
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   })
-    .then(({ data: { token, id, message, role } }) => {
+    .then(({
+      data: {
+        token, id, message, role,
+      },
+    }) => {
       dispatch({
         type: USER_LOGGED,
         payload: {
@@ -27,7 +31,7 @@ export const logInUser = (username, password, navigation) => async (
         },
       });
       Alert.alert('Successful', message);
-      navigation.navigate('UserProfile');
+      navigation.navigate('CurrentUserProfile');
     })
     .catch((error) => {
       Alert.alert('Error', error.response.data.message);

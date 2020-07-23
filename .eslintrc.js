@@ -19,5 +19,7 @@ module.exports = {
     'linebreak-style': 0,
     'no-case-declarations': 0,
     'react/jsx-fragments': 0,
+    'no-shadow': 0,
+    'no-param-reassign': 0,
   },
 };

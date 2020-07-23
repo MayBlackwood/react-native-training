@@ -1,28 +1,34 @@
 import React, { Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { TouchableOpacity, Text, View, Alert } from 'react-native';
+import {
+  TouchableOpacity, Text, View, Alert,
+} from 'react-native';
 import { SwipeRow } from 'react-native-swipe-list-view';
 import { faTrash, faPen, faEye } from '@fortawesome/free-solid-svg-icons';
-import ListItemButton from './ListItemButton';
 import axios from 'axios';
-import { getAllUsers } from './../store/actions/UsersActions';
+import ListItemButton from './ListItemButton';
+import { getAllUsers } from '../store/actions/UsersActions';
 
 const ListItem = ({
-  item: { username, firstname, lastname, role, id, orderNumber },
+  item: {
+    username, firstname, lastname, role, id,
+  },
   index,
   move,
   moveEnd,
   isActive,
+  navigation,
 }) => {
   const currentUser = useSelector(({ user }) => user);
-  const users = useSelector(({ users: { users } }) => users);
   const dispatch = useDispatch();
   const currentUserRole = currentUser.role;
   const getItemColor = (i) => (i % 2 === 0 ? '#7C05F2' : '#6204BF');
 
-  const handleDeleteClick = async (userId) => {
-    Alert.alert('Deleting', `Delete user with id ${userId}?`);
+  const goToButton = (path) => {
+    navigation.navigate(path);
+  };
 
+  const handleDeleteClick = async (userId) => {
     await axios({
       method: 'DELETE',
       url: `http://10.0.2.2:5000/users/${userId}`,
@@ -35,19 +41,12 @@ const ListItem = ({
     })
       .then((res) => {
         dispatch(getAllUsers());
+        Alert.alert('Delete', res.data);
       })
       .catch((error) => {
         Alert.alert('Error', error.response.data.message);
         return error.response;
       });
-  };
-
-  const handleEditClick = () => {
-    Alert.alert('Edit', `Edit user with id ${id}?`);
-  };
-
-  const handleViewClick = () => {
-    Alert.alert('View', `View profile of user with id ${id}?`);
   };
 
   return (
@@ -60,10 +59,11 @@ const ListItem = ({
         }}
       >
         <ListItemButton
-          handleButtonClick={handleViewClick}
+          handleButtonClick={() => goToButton('UserProfile')}
           color="white"
           backgroundColor="#050259"
           icon={faEye}
+          disabled={false}
         />
         {currentUserRole === 'admin' && (
           <Fragment>
@@ -72,12 +72,14 @@ const ListItem = ({
               color="white"
               backgroundColor="#F23827"
               icon={faTrash}
+              disabled={role === 'admin'}
             />
             <ListItemButton
-              handleButtonClick={handleEditClick}
+              handleButtonClick={() => goToButton('EditUserPage')}
               color="white"
               backgroundColor="#050259"
               icon={faPen}
+              disabled={role === 'admin'}
             />
           </Fragment>
         )}

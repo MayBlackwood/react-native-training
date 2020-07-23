@@ -7,6 +7,7 @@ const ListItemButton = ({
   icon,
   backgroundColor,
   color,
+  disabled,
 }) => (
   <TouchableHighlight
     onPress={handleButtonClick}
@@ -17,8 +18,9 @@ const ListItemButton = ({
       justifyContent: 'center',
       alignItems: 'center',
     }}
+    disabled={disabled}
   >
-    <FontAwesomeIcon icon={icon} style={{ color }} />
+    <FontAwesomeIcon icon={icon} style={{ color: disabled ? 'grey' : color }} />
   </TouchableHighlight>
 );
 

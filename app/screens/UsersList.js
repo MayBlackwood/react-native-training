@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import sortBy from 'lodash.sortby';
@@ -6,7 +6,7 @@ import DraggableFlatList from 'react-native-draggable-flatlist';
 import { getAllUsers, updateOrder } from '../store/actions/UsersActions';
 import ListItem from '../components/ListItem';
 
-const UsersList = () => {
+const UsersList = ({ navigation }) => {
   const users = useSelector(({ users }) => users);
   const dispatch = useDispatch();
 
@@ -29,13 +29,16 @@ const UsersList = () => {
     dispatch(getAllUsers());
   }, []);
 
-  const renderItem = ({ item, index, move, moveEnd, isActive }) => (
+  const renderItem = ({
+    item, index, move, moveEnd, isActive,
+  }) => (
     <ListItem
       item={item}
       index={index}
       move={move}
       moveEnd={moveEnd}
       isActive={isActive}
+      navigation={navigation}
     />
   );
 
@@ -44,7 +47,7 @@ const UsersList = () => {
       <DraggableFlatList
         data={users}
         renderItem={renderItem}
-        keyExtractor={(item, index) => `draggable-item-${item.id}`}
+        keyExtractor={(item) => `draggable-item-${item.id}`}
         onMoveEnd={(params) => changeOrderFunction(params)}
       />
     </View>
