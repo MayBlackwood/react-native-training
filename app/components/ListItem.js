@@ -8,7 +8,7 @@ import axios from 'axios';
 import { getAllUsers } from './../store/actions/UsersActions';
 
 const ListItem = ({
-  item: { username, firstname, lastname, role, id },
+  item: { username, firstname, lastname, role, id, orderNumber },
   index,
   move,
   moveEnd,
@@ -19,7 +19,6 @@ const ListItem = ({
   const dispatch = useDispatch();
   const currentUserRole = currentUser.role;
   const getItemColor = (i) => (i % 2 === 0 ? '#7C05F2' : '#6204BF');
-  console.log(users);
 
   const handleDeleteClick = async (userId) => {
     Alert.alert('Deleting', `Delete user with id ${userId}?`);
@@ -35,9 +34,7 @@ const ListItem = ({
       },
     })
       .then((res) => {
-        console.log(res.data);
         dispatch(getAllUsers());
-        console.log(users);
       })
       .catch((error) => {
         Alert.alert('Error', error.response.data.message);

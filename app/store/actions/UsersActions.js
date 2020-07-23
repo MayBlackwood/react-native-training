@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Alert } from 'react-native';
-import { USERS_LIST } from '../types';
+import { USERS_LIST, SORT_USERS } from '../types';
 
 export const getAllUsers = () => async (dispatch) => {
   await axios({
@@ -9,6 +9,11 @@ export const getAllUsers = () => async (dispatch) => {
     header: { 'Content-Type': 'application/json' },
   })
     .then(({ data }) => {
+      data.map((item, index) => {
+        item.orderNumber = index;
+        return item;
+      });
+
       dispatch({
         type: USERS_LIST,
         payload: {
@@ -22,6 +27,11 @@ export const getAllUsers = () => async (dispatch) => {
     });
 };
 
-export const updateUsers = () => (dispatch) => {
-  dispatch({});
+export const updateOrder = (usersData) => (dispatch) => {
+  dispatch({
+    type: SORT_USERS,
+    payload: {
+      users: usersData,
+    },
+  });
 };
