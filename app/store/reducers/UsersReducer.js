@@ -8,9 +8,7 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case USERS_LIST:
       const { users } = action.payload;
-      return {
-        users,
-      };
+      return users;
 
     default:
       return state;
