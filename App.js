@@ -11,6 +11,7 @@ import SignUpScreen from './app/screens/SignUpScreen';
 import UserProfile from './app/screens/UserProfile';
 import UsersList from './app/screens/UsersList';
 import store from './app/store/index';
+import Test from './app/screens/Test';
 
 const Stack = createStackNavigator();
 
@@ -45,6 +46,11 @@ const App = () => (
             name="UsersList"
             component={UsersList}
             options={{ title: 'All Users' }}
+          />
+          <Stack.Screen
+            name="Test"
+            component={Test}
+            options={{ title: 'Test' }}
           />
         </Stack.Navigator>
       </NavigationContainer>

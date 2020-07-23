@@ -9,7 +9,6 @@ export default (state = INITIAL_STATE, action) => {
     case USERS_LIST:
       const { users } = action.payload;
       return {
-        ...state,
         users,
       };
 

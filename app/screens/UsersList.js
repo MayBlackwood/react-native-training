@@ -15,8 +15,14 @@ const UsersList = () => {
     setData(users);
   }, []);
 
-  const renderItem = ({ item, index, drag, isActive }) => (
-    <ListItem item={item} index={index} drag={drag} isActive={isActive} />
+  const renderItem = ({ item, index, move, moveEnd, isActive }) => (
+    <ListItem
+      item={item}
+      index={index}
+      move={move}
+      moveEnd={moveEnd}
+      isActive={isActive}
+    />
   );
 
   return (
@@ -25,7 +31,7 @@ const UsersList = () => {
         data={data}
         renderItem={renderItem}
         keyExtractor={(item, index) => `draggable-item-${item.id}`}
-        onDragEnd={({ data }) => setData(data)}
+        onMoveEnd={({ data }) => setData(data)}
       />
     </View>
   );

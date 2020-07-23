@@ -17,12 +17,13 @@ export const logInUser = (username, password, navigation) => async (
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   })
-    .then(({ data: { token, id, message } }) => {
+    .then(({ data: { token, id, message, role } }) => {
       dispatch({
         type: USER_LOGGED,
         payload: {
           token,
           userId: id,
+          role,
         },
       });
       Alert.alert('Successful', message);
