@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { TouchableOpacity, Text, View } from 'react-native';
+import { TouchableOpacity, TouchableHighlight, Text, View } from 'react-native';
 import { SwipeRow } from 'react-native-swipe-list-view';
 import { faTrash, faPen, faEye } from '@fortawesome/free-solid-svg-icons';
 import ListItemButton from './ListItemButton';
@@ -63,36 +63,41 @@ const ListItem = ({
         )}
       </View>
 
-      <TouchableOpacity
-        style={{
-          height: 100,
-          width: '100%',
-          backgroundColor: isActive ? '#F67280' : `${getItemColor(index)}`,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
+      <TouchableHighlight
+        underlayColor="#C5A8E2"
+        style={[
+          {
+            height: 100,
+            width: '100%',
+            backgroundColor: isActive ? '#F67280' : `${getItemColor(index)}`,
+            alignItems: 'center',
+            justifyContent: 'center',
+          },
+        ]}
         onLongPress={move}
         onPressOut={moveEnd}
       >
-        <Text
-          style={{
-            fontWeight: 'bold',
-            color: 'lightgrey',
-            fontSize: 32,
-          }}
-        >
-          {username}
-        </Text>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            color: 'black',
-            fontSize: 20,
-          }}
-        >
-          {`${firstname} ${lastname}`}
-        </Text>
-      </TouchableOpacity>
+        <Fragment>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              color: 'lightgrey',
+              fontSize: 32,
+            }}
+          >
+            {username}
+          </Text>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              color: 'black',
+              fontSize: 20,
+            }}
+          >
+            {`${firstname} ${lastname}`}
+          </Text>
+        </Fragment>
+      </TouchableHighlight>
     </SwipeRow>
   );
 };

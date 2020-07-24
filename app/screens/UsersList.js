@@ -29,9 +29,13 @@ const UsersList = ({ navigation }) => {
     dispatch(getAllUsers());
   }, []);
 
-  const renderItem = ({
-    item, index, move, moveEnd, isActive,
-  }) => (
+  useEffect(() => {
+    if (!users.length) {
+      dispatch(getAllUsers());
+    }
+  }, [users]);
+
+  const renderItem = ({ item, index, move, moveEnd, isActive }) => (
     <ListItem
       item={item}
       index={index}
