@@ -1,35 +1,41 @@
-import { USER_LOGGED, USER_LOGOUT } from "./../types";
-import axios from "axios";
+import axios from 'axios';
 
-import { Alert } from "react-native";
+import { Alert } from 'react-native';
+import { USER_LOGGED, USER_LOGOUT } from '../types';
+import { api } from '../../constants';
 
 export const logInUser = (username, password, navigation) => async (
-  dispatch
+  dispatch,
 ) => {
   await axios({
-    method: "POST",
-    url: "http://10.0.2.2:5000/login",
+    method: 'POST',
+    url: `http://${api}/login`,
     data: {
       username,
       password,
     },
     header: {
-      "Content-Type": "application/x-www-form-urlencoded",
+      'Content-Type': 'application/x-www-form-urlencoded',
     },
   })
-    .then(({ data: { token, id, message } }) => {
+    .then(({
+      data: {
+        token, id, message, role,
+      },
+    }) => {
       dispatch({
         type: USER_LOGGED,
         payload: {
-          token: token,
+          token,
           userId: id,
+          role,
         },
       });
-      Alert.alert("Successful", message);
-      navigation.navigate("UserProfile");
+      Alert.alert('Successful', message);
+      navigation.navigate('CurrentUserProfile');
     })
     .catch((error) => {
-      Alert.alert("Error", error.response.data.message);
+      Alert.alert('Error', error.response.data.message);
       return error.response;
     });
 };

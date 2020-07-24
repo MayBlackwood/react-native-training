@@ -2,17 +2,15 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
+import { signUpUser } from '../services';
 
 import {
   SafeAreaView,
   StyleSheet,
   View,
-  Alert,
   ScrollView,
 } from 'react-native';
 import { Button } from 'react-native-elements';
-import { logInUser } from '../store/actions/UserActions';
 import FormInput from '../components/FormInput';
 
 const SignUpSchema = Yup.object().shape({
@@ -53,40 +51,7 @@ const SignUpScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const handleButtonClick = (values) => {
-    signUpUser(values);
-  };
-
-  const signUpUser = async ({
-    username,
-    firstName,
-    lastName,
-    email,
-    password,
-    description,
-  }) => {
-    await axios({
-      method: 'POST',
-      url: 'http://10.0.2.2:5000/sign_up',
-      data: {
-        username,
-        firstName,
-        lastName,
-        email,
-        password,
-        description,
-      },
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    })
-      .then(({ data: { message } }) => {
-        Alert.alert('Sign Up', `${message}`);
-        dispatch(logInUser(username, password, navigation));
-      })
-      .catch((error) => {
-        Alert.alert('Error', error.message);
-        return error;
-      });
+    signUpUser(values, dispatch);
   };
 
   return (
@@ -103,9 +68,7 @@ const SignUpScreen = ({ navigation }) => {
       validationSchema={SignUpSchema}
       onSubmit={(values) => handleButtonClick(values)}
     >
-      {({
-        handleChange, handleSubmit, values, errors, touched,
-      }) => (
+      {({ handleChange, handleSubmit, values, errors, touched }) => (
         <SafeAreaView style={styles.container}>
           <ScrollView style={{ width: '100%' }}>
             <View
