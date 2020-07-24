@@ -1,18 +1,15 @@
 import React, { Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  TouchableOpacity, Text, View, Alert,
-} from 'react-native';
+import { TouchableOpacity, Text, View, Alert } from 'react-native';
 import { SwipeRow } from 'react-native-swipe-list-view';
 import { faTrash, faPen, faEye } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import { api } from '../constants';
 import ListItemButton from './ListItemButton';
 import { getAllUsers } from '../store/actions/UsersActions';
 
 const ListItem = ({
-  item: {
-    username, firstname, lastname, role, id,
-  },
+  item: { username, firstname, lastname, role, id },
   index,
   move,
   moveEnd,
@@ -31,7 +28,7 @@ const ListItem = ({
   const handleDeleteClick = async (userId) => {
     await axios({
       method: 'DELETE',
-      url: `http://10.0.2.2:5000/users/${userId}`,
+      url: `http://${api}/users/${userId}`,
       data: {
         id: userId,
       },

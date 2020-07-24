@@ -18,6 +18,7 @@
     "@react-navigation/stack": "^5.7.0",
     "axios": "^0.19.2",
     "expo": "~38.0.8",
+    "expo-constants": "^9.1.1",
     "expo-status-bar": "^1.0.2",
     "formik": "^2.1.5",
     "lodash.sortby": "^4.7.0",

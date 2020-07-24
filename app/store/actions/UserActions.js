@@ -2,13 +2,14 @@ import axios from 'axios';
 
 import { Alert } from 'react-native';
 import { USER_LOGGED, USER_LOGOUT } from '../types';
+import { api } from '../../constants';
 
 export const logInUser = (username, password, navigation) => async (
   dispatch,
 ) => {
   await axios({
     method: 'POST',
-    url: 'http://10.0.2.2:5000/login',
+    url: `http://${api}/login`,
     data: {
       username,
       password,

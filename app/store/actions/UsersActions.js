@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { Alert } from 'react-native';
 import { USERS_LIST, SORT_USERS } from '../types';
+import { api } from '../../constants';
 
 export const getAllUsers = () => async (dispatch) => {
   await axios({
     method: 'GET',
-    url: 'http://10.0.2.2:5000/users',
+    url: `http://${api}/users`,
     header: { 'Content-Type': 'application/json' },
   })
     .then(({ data }) => {

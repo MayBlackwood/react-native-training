@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { api } from '../constants';
 
 import {
   SafeAreaView,
@@ -66,7 +67,7 @@ const SignUpScreen = ({ navigation }) => {
   }) => {
     await axios({
       method: 'POST',
-      url: 'http://10.0.2.2:5000/sign_up',
+      url: `http://${api}/sign_up`,
       data: {
         username,
         firstName,
