@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { signUpUser } from '../services';
 
 import {
   SafeAreaView,
@@ -11,6 +10,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { Button } from 'react-native-elements';
+import { signUpUser } from '../services';
 import FormInput from '../components/FormInput';
 
 const SignUpSchema = Yup.object().shape({
@@ -68,7 +68,9 @@ const SignUpScreen = ({ navigation }) => {
       validationSchema={SignUpSchema}
       onSubmit={(values) => handleButtonClick(values)}
     >
-      {({ handleChange, handleSubmit, values, errors, touched }) => (
+      {({
+        handleChange, handleSubmit, values, errors, touched,
+      }) => (
         <SafeAreaView style={styles.container}>
           <ScrollView style={{ width: '100%' }}>
             <View

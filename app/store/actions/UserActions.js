@@ -32,7 +32,7 @@ export const logInUser = (username, password, navigation) => async (
         },
       });
       Alert.alert('Successful', message);
-      navigation.navigate('CurrentUserProfile');
+      navigation.navigate('Home');
     })
     .catch((error) => {
       Alert.alert('Error', error.response.data.message);

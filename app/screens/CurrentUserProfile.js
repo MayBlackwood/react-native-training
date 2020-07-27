@@ -1,19 +1,28 @@
-import React from 'react';
-import { StyleSheet, Text, SafeAreaView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  Alert,
+} from 'react-native';
+import { useSelector } from 'react-redux';
+import Profile from './Profile';
+import { getUser } from '../services';
 
-const CurrentUserProfile = () => (
-  <SafeAreaView style={styles.container}>
-    <Text>User Profile</Text>
-  </SafeAreaView>
-);
+const CurrentUserProfile = () => {
+  const currentUser = useSelector(({ user }) => user);
+  const { userId: currentUserId } = currentUser;
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    getUser(currentUserId)
+      .then((res) => {
+        setUserData(res.data);
+      })
+      .catch((error) => {
+        Alert.alert('Error', error.message);
+        return error;
+      });
+  }, [currentUser]);
+
+  return <Profile userData={userData} />;
+};
 
 export default CurrentUserProfile;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#F8B195',
-  },
-});

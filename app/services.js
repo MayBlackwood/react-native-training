@@ -26,7 +26,9 @@ export const deleteUser = async (userId, dispatch) => {
 };
 
 export const signUpUser = async (
-  { username, firstName, lastName, email, password, description },
+  {
+    username, firstName, lastName, email, password, description,
+  },
   dispatch,
   navigation,
 ) => {
@@ -53,4 +55,19 @@ export const signUpUser = async (
       Alert.alert('Error', error.message);
       return error;
     });
+};
+
+export const getUser = async (userId) => {
+  const result = await axios({
+    method: 'GET',
+    url: `http://${api}/users/${userId}`,
+    data: {
+      id: userId,
+    },
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return result;
 };
