@@ -1,14 +1,13 @@
 import React from 'react';
-import {
-  View, TextInput, Text, StyleSheet,
-} from 'react-native';
+import { View, TextInput, Text, StyleSheet } from 'react-native';
 
-const FormInput = ({
-  value, title, handleChange, values, errors, touched,
-}) => (
+const FormInput = ({ value, title, handleChange, values, errors, touched }) => (
   <View
     style={{
       marginBottom: 20,
+      width: '90%',
+      marginLeft: 'auto',
+      marginRight: 'auto',
     }}
   >
     <Text style={styles.label}>{title}</Text>

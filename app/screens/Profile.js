@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,7 +6,6 @@ import {
   ScrollView,
   Image,
   View,
-  Alert,
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import { useSelector } from 'react-redux';
@@ -17,19 +16,49 @@ import {
   faList,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { getUser } from '../services';
 
 const Profile = ({
   navigation,
-  userData: {
-    username, firstname, lastname, email, role, description, id,
+  route: {
+    params: { userId },
   },
+  screenName,
 }) => {
+  const [userData, setUserData] = useState({});
+
   const handleButtonClick = () => {
-    Alert.alert('OK', 'Edit profile');
+    navigation.navigate('EditUserPage', { userData, lastScreen: screenName });
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const getUserData = () => {
+    getUser(userId)
+      .then((res) => {
+        console.log(res.data);
+        setUserData(res.data);
+      })
+      .catch((error) => {
+        Alert.alert('Error', error.message);
+        return error;
+      });
   };
 
   const currentUser = useSelector(({ user }) => user);
   const { role: currentUserRole, userId: currentUserId } = currentUser;
+
+  const {
+    username,
+    firstname,
+    lastname,
+    email,
+    description,
+    id,
+    role,
+  } = userData;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -49,10 +78,7 @@ const Profile = ({
             />
           </View>
           <View style={styles.usernameContainer}>
-            <Text style={styles.username}>
-              @
-              {username}
-            </Text>
+            <Text style={styles.username}>@{username}</Text>
           </View>
         </View>
         <View style={styles.section}>
@@ -60,9 +86,7 @@ const Profile = ({
             <FontAwesomeIcon icon={faUser} style={styles.icon} size={32} />
           </View>
           <Text style={styles.text}>
-            {firstname}
-            {' '}
-            {lastname}
+            {firstname} {lastname}
           </Text>
         </View>
         <View style={styles.section}>

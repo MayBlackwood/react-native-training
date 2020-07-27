@@ -6,19 +6,19 @@ import { faTrash, faPen, faEye } from '@fortawesome/free-solid-svg-icons';
 import ListItemButton from './ListItemButton';
 import { deleteUser } from '../services';
 
-const ListItem = ({
-  item, index, move, moveEnd, isActive, navigation,
-}) => {
-  const {
-    username, firstname, lastname, role, id,
-  } = item;
+const ListItem = ({ item, index, move, moveEnd, isActive, navigation }) => {
+  const { username, firstname, lastname, role, id } = item;
   const currentUser = useSelector(({ user }) => user);
   const dispatch = useDispatch();
   const currentUserRole = currentUser.role;
   const getItemColor = (i) => (i % 2 === 0 ? '#7C05F2' : '#6204BF');
 
-  const goToButton = (path) => {
-    navigation.navigate(path, { userData: item });
+  const goToButton = (path, lastScreen) => {
+    if (path === 'EditUserPage') {
+      navigation.navigate(path, { userData: item, lastScreen });
+    } else {
+      navigation.navigate(path, { userId: id, lastScreen });
+    }
   };
 
   const handleDeleteClick = (userId) => {
@@ -35,7 +35,7 @@ const ListItem = ({
         }}
       >
         <ListItemButton
-          handleButtonClick={() => goToButton('UserProfile')}
+          handleButtonClick={() => goToButton('Profile', 'Profile')}
           color="white"
           backgroundColor="#050259"
           icon={faEye}
@@ -51,7 +51,7 @@ const ListItem = ({
               disabled={role === 'admin'}
             />
             <ListItemButton
-              handleButtonClick={() => goToButton('EditUserPage')}
+              handleButtonClick={() => goToButton('EditUserPage', 'UsersList')}
               color="white"
               backgroundColor="#050259"
               icon={faPen}

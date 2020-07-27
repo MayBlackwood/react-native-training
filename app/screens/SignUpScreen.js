@@ -80,7 +80,7 @@ const SignUpScreen = ({ navigation }) => {
                 marginRight: 'auto',
                 marginTop: 30,
               }}
-            >
+            > 
               {signUpFormConfig.map(({ value, title }) => (
                 <FormInput
                   title={title}

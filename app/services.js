@@ -26,9 +26,7 @@ export const deleteUser = async (userId, dispatch) => {
 };
 
 export const signUpUser = async (
-  {
-    username, firstName, lastName, email, password, description,
-  },
+  { username, firstName, lastName, email, password, description },
   dispatch,
   navigation,
 ) => {
@@ -70,4 +68,33 @@ export const getUser = async (userId) => {
   });
 
   return result;
+};
+
+export const updateUser = async (
+  { firstname, lastname, email, username, description },
+  id,
+  navigation,
+  path,
+) => {
+  console.log(path);
+  await axios({
+    method: 'PUT',
+    url: `http://${api}/users/${id}`,
+    data: {
+      id,
+      firstname,
+      lastname,
+      email,
+      username,
+      description,
+    },
+  })
+    .then((res) => {
+      Alert.alert('Success', res.data);
+      navigation.navigate(path);
+    })
+    .catch((error) => {
+      Alert.alert('Error', error.message);
+      return error;
+    });
 };
