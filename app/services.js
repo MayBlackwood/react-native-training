@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Alert } from 'react-native';
 import { api } from './constants';
-import { getAllUsers } from './store/actions/UsersActions';
+// import { logIn } from './store/actions/UserActions'
 
 export const logInUser = async (username, password) =>
   axios({

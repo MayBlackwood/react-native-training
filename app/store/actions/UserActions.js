@@ -1,12 +1,12 @@
 import { Alert } from 'react-native';
 import { USER_LOGGED, USER_LOGOUT, USER_DATA } from '../types';
-import { logInUser as logIn } from '../../services';
+import { logInUser } from '../../services';
 
-export const logInUser = (username, password, navigation) => async (
+export const logIn = (username, password, navigation) => async (
   dispatch,
 ) => {
   try {
-    const response = await logIn(username, password);
+    const response = await logInUser(username, password);
     const {
       data: { token, id, message, role },
     } = response;
