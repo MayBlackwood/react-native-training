@@ -5,6 +5,7 @@ import {
   ScrollView,
   View,
   Image,
+  Alert,
 } from 'react-native';
 import { Formik } from 'formik';
 import { Button } from 'react-native-elements';
@@ -39,17 +40,18 @@ const EditUserPage = ({
   navigation,
   route: {
     params: {
-      userData: {
-        username, firstname, lastname, email, description, id,
-      },
-      getUserData,
+      userData: { username, firstname, lastname, email, description, id },
     },
   },
 }) => {
-  const handleSaveButtonClick = (values) => {
-    updateUser(values, id, navigation).then(() => {
-      getUserData();
-    });
+  const handleSaveButtonClick = async (values) => {
+    try {
+      const { data } = await updateUser(values, id, navigation);
+      Alert.alert('Success', data);
+      navigation.goBack();
+    } catch (error) {
+      Alert.alert('Error', error.message);
+    }
   };
 
   return (
@@ -64,9 +66,7 @@ const EditUserPage = ({
       validationSchema={FormSchema}
       onSubmit={(values) => handleSaveButtonClick(values)}
     >
-      {({
-        handleChange, handleSubmit, values, errors, touched,
-      }) => (
+      {({ handleChange, handleSubmit, values, errors, touched }) => (
         <SafeAreaView style={styles.container}>
           <ScrollView style={{ width: '100%' }}>
             <View style={styles.header}>

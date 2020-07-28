@@ -82,9 +82,8 @@ export const getUser = (userId) => {
 export const updateUser = async (
   { firstname, lastname, email, username, description },
   id,
-  navigation,
 ) => {
-  await axios({
+  const result = await axios({
     method: 'PUT',
     url: `http://${api}/users/${id}`,
     data: {
@@ -95,13 +94,7 @@ export const updateUser = async (
       username,
       description,
     },
-  })
-    .then((res) => {
-      Alert.alert('Success', res.data);
-      navigation.goBack();
-    })
-    .catch((error) => {
-      Alert.alert('Error', error.message);
-      return error;
-    });
+  });
+
+  return result;
 };

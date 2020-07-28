@@ -30,7 +30,6 @@ const Profile = ({
   const handleButtonClick = () => {
     navigation.navigate('EditUserPage', {
       userData,
-      getUserData,
     });
   };
 
