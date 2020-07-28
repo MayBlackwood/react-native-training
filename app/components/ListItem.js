@@ -1,22 +1,14 @@
 import React, { Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { TouchableHighlight, Text, View } from 'react-native';
+import { TouchableHighlight, Text, View, Alert } from 'react-native';
 import { SwipeRow } from 'react-native-swipe-list-view';
 import { faTrash, faPen, faEye } from '@fortawesome/free-solid-svg-icons';
 import ListItemButton from './ListItemButton';
+import { getAllUsers } from '../store/actions/UsersActions';
 import { deleteUser } from '../services';
 
-const ListItem = ({
-  item,
-  index,
-  move,
-  moveEnd,
-  isActive,
-  navigation,
-}) => {
-  const {
-    username, firstname, lastname, role, id,
-  } = item;
+const ListItem = ({ item, index, move, moveEnd, isActive, navigation }) => {
+  const { username, firstname, lastname, role, id } = item;
   const currentUser = useSelector(({ user }) => user);
   const dispatch = useDispatch();
   const currentUserRole = currentUser.role;
@@ -30,8 +22,14 @@ const ListItem = ({
     }
   };
 
-  const handleDeleteClick = (userId) => {
-    deleteUser(userId, dispatch, navigation);
+  const handleDeleteClick = async (userId) => {
+    try {
+      const { data } = await deleteUser(userId);
+      dispatch(getAllUsers());
+      Alert.alert('Delete', data);
+    } catch (error) {
+      Alert.alert('Error', error.response.data.message);
+    }
   };
 
   return (

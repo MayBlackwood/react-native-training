@@ -22,8 +22,8 @@ export const getUsers = () =>
     header: { 'Content-Type': 'application/json' },
   });
 
-export const deleteUser = async (userId, dispatch) => {
-  await axios({
+export const deleteUser = (userId) => {
+  const result = axios({
     method: 'DELETE',
     url: `http://${api}/users/${userId}`,
     data: {
@@ -32,15 +32,9 @@ export const deleteUser = async (userId, dispatch) => {
     header: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-  })
-    .then((res) => {
-      dispatch(getAllUsers());
-      Alert.alert('Delete', res.data);
-    })
-    .catch((error) => {
-      Alert.alert('Error', error.response.data.message);
-      return error.response;
-    });
+  });
+
+  return result;
 };
 
 export const signUpUser = ({
