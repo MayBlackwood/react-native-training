@@ -48,7 +48,7 @@ const ListItem = ({
         }}
       >
         <ListItemButton
-          handleButtonClick={() => goToButton('Profile', 'Profile')}
+          handleButtonClick={() => goToButton('Profile')}
           color="white"
           backgroundColor="#050259"
           icon={faEye}
@@ -64,7 +64,7 @@ const ListItem = ({
               disabled={role === 'admin'}
             />
             <ListItemButton
-              handleButtonClick={() => goToButton('EditUserPage', 'UsersList')}
+              handleButtonClick={() => goToButton('EditUserPage')}
               color="white"
               backgroundColor="#050259"
               icon={faPen}
