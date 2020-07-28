@@ -79,7 +79,9 @@ const SignUpScreen = ({ navigation }) => {
       validationSchema={SignUpSchema}
       onSubmit={(values) => handleButtonClick(values)}
     >
-      {({ handleChange, handleSubmit, values, errors, touched }) => (
+      {({
+        handleChange, handleSubmit, values, errors, touched,
+      }) => (
         <SafeAreaView style={styles.container}>
           <ScrollView style={{ width: '100%' }}>
             <View

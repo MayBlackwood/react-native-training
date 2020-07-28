@@ -25,6 +25,9 @@ const Profile = ({
     params: { userId },
   },
 }) => {
+  const users = useSelector(({ users }) => users);
+  const currentUser = useSelector(({ user }) => user);
+  const { role: currentUserRole, userId: currentUserId } = currentUser;
   const [userData, setUserData] = useState({});
 
   const handleButtonClick = () => {
@@ -35,7 +38,7 @@ const Profile = ({
 
   useEffect(() => {
     getUserData();
-  }, []);
+  }, [users]);
 
   const getUserData = async () => {
     try {
@@ -45,9 +48,6 @@ const Profile = ({
       Alert.alert('Error', error.message);
     }
   };
-
-  const currentUser = useSelector(({ user }) => user);
-  const { role: currentUserRole, userId: currentUserId } = currentUser;
 
   const {
     username,
@@ -77,16 +77,16 @@ const Profile = ({
             />
           </View>
           <View style={styles.usernameContainer}>
-            <Text style={styles.username}>@{username}</Text>
+            <Text style={styles.username}>
+              {`@${username}`}
+            </Text>
           </View>
         </View>
         <View style={styles.section}>
           <View style={styles.iconContainer}>
             <FontAwesomeIcon icon={faUser} style={styles.icon} size={32} />
           </View>
-          <Text style={styles.text}>
-            {firstname} {lastname}
-          </Text>
+          <Text style={styles.text}>{`${firstname} ${lastname}`}</Text>
         </View>
         <View style={styles.section}>
           <View style={styles.iconContainer}>

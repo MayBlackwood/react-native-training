@@ -1,25 +1,23 @@
 import axios from 'axios';
 import { api } from './constants';
 
-export const logInUser = (username, password) =>
-  axios({
-    method: 'POST',
-    url: `http://${api}/login`,
-    data: {
-      username,
-      password,
-    },
-    header: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-  });
+export const logInUser = (username, password) => axios({
+  method: 'POST',
+  url: `http://${api}/login`,
+  data: {
+    username,
+    password,
+  },
+  header: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  },
+});
 
-export const getUsers = () =>
-  axios({
-    method: 'GET',
-    url: `http://${api}/users`,
-    header: { 'Content-Type': 'application/json' },
-  });
+export const getUsers = () => axios({
+  method: 'GET',
+  url: `http://${api}/users`,
+  header: { 'Content-Type': 'application/json' },
+});
 
 export const deleteUser = (userId) => {
   const result = axios({
@@ -79,7 +77,9 @@ export const getUser = (userId) => {
 };
 
 export const updateUser = async (
-  { firstname, lastname, email, username, description },
+  {
+    firstname, lastname, email, username, description,
+  },
   id,
 ) => {
   const result = await axios({

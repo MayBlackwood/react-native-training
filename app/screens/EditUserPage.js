@@ -42,7 +42,9 @@ const EditUserPage = ({
   navigation,
   route: {
     params: {
-      userData: { username, firstname, lastname, email, description, id },
+      userData: {
+        username, firstname, lastname, email, description, id,
+      },
     },
   },
 }) => {
@@ -70,7 +72,9 @@ const EditUserPage = ({
       validationSchema={FormSchema}
       onSubmit={(values) => handleSaveButtonClick(values)}
     >
-      {({ handleChange, handleSubmit, values, errors, touched }) => (
+      {({
+        handleChange, handleSubmit, values, errors, touched,
+      }) => (
         <SafeAreaView style={styles.container}>
           <ScrollView style={{ width: '100%' }}>
             <View style={styles.header}>

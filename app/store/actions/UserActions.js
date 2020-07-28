@@ -1,5 +1,5 @@
 import { Alert } from 'react-native';
-import { USER_LOGGED, USER_LOGOUT, USER_DATA } from '../types';
+import { USER_LOGGED, USER_LOGOUT } from '../types';
 import { logInUser } from '../../services';
 
 export const logIn = (username, password, navigation) => async (
@@ -8,7 +8,9 @@ export const logIn = (username, password, navigation) => async (
   try {
     const response = await logInUser(username, password);
     const {
-      data: { token, id, message, role },
+      data: {
+        token, id, message, role,
+      },
     } = response;
     dispatch({ type: USER_LOGGED, payload: { token, userId: id, role } });
     Alert.alert('Successful', message);
