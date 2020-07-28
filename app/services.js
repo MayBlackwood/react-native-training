@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { Alert } from 'react-native';
 import { api } from './constants';
 
 export const logInUser = (username, password) =>

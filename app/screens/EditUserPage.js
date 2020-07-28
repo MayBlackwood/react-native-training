@@ -7,11 +7,13 @@ import {
   Image,
   Alert,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { Button } from 'react-native-elements';
 import * as Yup from 'yup';
 import FormInput from '../components/FormInput';
 import { updateUser } from '../services';
+import { updateUserData } from '../store/actions/UsersActions';
 
 const FormSchema = Yup.object().shape({
   username: Yup.string()
@@ -44,10 +46,12 @@ const EditUserPage = ({
     },
   },
 }) => {
+  const dispatch = useDispatch();
   const handleSaveButtonClick = async (values) => {
     try {
       const { data } = await updateUser(values, id, navigation);
       Alert.alert('Success', data);
+      dispatch(updateUserData({ ...values, id }));
       navigation.goBack();
     } catch (error) {
       Alert.alert('Error', error.message);

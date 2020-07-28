@@ -1,5 +1,5 @@
 import { Alert } from 'react-native';
-import { USERS_LIST, SORT_USERS } from '../types';
+import { USERS_LIST, SORT_USERS, USER_UPDATE } from '../types';
 import { getUsers } from '../../services';
 
 export const getAllUsers = () => async (dispatch) => {
@@ -26,6 +26,15 @@ export const updateOrder = (usersData) => (dispatch) => {
     type: SORT_USERS,
     payload: {
       users: usersData,
+    },
+  });
+};
+
+export const updateUserData = (userData) => (dispatch) => {
+  dispatch({
+    type: USER_UPDATE,
+    payload: {
+      user: userData,
     },
   });
 };
