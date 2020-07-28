@@ -74,9 +74,7 @@ export const updateUser = async (
   { firstname, lastname, email, username, description },
   id,
   navigation,
-  path,
 ) => {
-  console.log(path);
   await axios({
     method: 'PUT',
     url: `http://${api}/users/${id}`,
@@ -91,7 +89,7 @@ export const updateUser = async (
   })
     .then((res) => {
       Alert.alert('Success', res.data);
-      navigation.navigate(path);
+      navigation.goBack();
     })
     .catch((error) => {
       Alert.alert('Error', error.message);

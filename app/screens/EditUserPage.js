@@ -16,8 +16,7 @@ const FormSchema = Yup.object().shape({
   username: Yup.string()
     .required('* Required')
     .min(2, 'Too Short!')
-    .max(40, 'Too Long!')
-    .matches(/[a-zA-Z]/, 'Username can only contain Latin letters.'),
+    .max(40, 'Too Long!'),
   firstname: Yup.string()
     .required('* Required')
     .min(2, 'Too Short!')
@@ -41,13 +40,15 @@ const EditUserPage = ({
   route: {
     params: {
       userData: { username, firstname, lastname, email, description, id },
-      lastScreen,
+      getUserData,
+      getUsers,
     },
   },
 }) => {
-  console.log(lastScreen);
   const handleSaveButtonClick = (values) => {
-    updateUser(values, id, navigation, lastScreen);
+    updateUser(values, id, navigation).then(() => {
+      getUserData();
+    });
   };
 
   return (

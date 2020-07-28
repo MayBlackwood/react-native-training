@@ -17,8 +17,7 @@ const SignUpSchema = Yup.object().shape({
   username: Yup.string()
     .required('* Required')
     .min(2, 'Too Short!')
-    .max(40, 'Too Long!')
-    .matches(/[a-zA-Z]/, 'Username can only contain Latin letters.'),
+    .max(40, 'Too Long!'),
   firstName: Yup.string()
     .required('* Required')
     .min(2, 'Too Short!')
@@ -51,7 +50,7 @@ const SignUpScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const handleButtonClick = (values) => {
-    signUpUser(values, dispatch);
+    signUpUser(values, dispatch, navigation);
   };
 
   return (
@@ -80,7 +79,7 @@ const SignUpScreen = ({ navigation }) => {
                 marginRight: 'auto',
                 marginTop: 30,
               }}
-            > 
+            >
               {signUpFormConfig.map(({ value, title }) => (
                 <FormInput
                   title={title}

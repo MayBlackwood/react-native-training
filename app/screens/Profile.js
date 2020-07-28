@@ -23,22 +23,23 @@ const Profile = ({
   route: {
     params: { userId },
   },
-  screenName,
 }) => {
   const [userData, setUserData] = useState({});
 
   const handleButtonClick = () => {
-    navigation.navigate('EditUserPage', { userData, lastScreen: screenName });
+    navigation.navigate('EditUserPage', {
+      userData,
+      getUserData,
+    });
   };
 
   useEffect(() => {
     getUserData();
-  }, []);
+  }, [navigation]);
 
   const getUserData = () => {
     getUser(userId)
       .then((res) => {
-        console.log(res.data);
         setUserData(res.data);
       })
       .catch((error) => {
