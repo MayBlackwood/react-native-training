@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Alert } from 'react-native';
 import { api } from './constants';
 
-export const logInUser = async (username, password) =>
+export const logInUser = (username, password) =>
   axios({
     method: 'POST',
     url: `http://${api}/login`,
@@ -13,6 +13,13 @@ export const logInUser = async (username, password) =>
     header: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
+  });
+
+export const getUsers = () =>
+  axios({
+    method: 'GET',
+    url: `http://${api}/users`,
+    header: { 'Content-Type': 'application/json' },
   });
 
 export const deleteUser = async (userId, dispatch) => {
