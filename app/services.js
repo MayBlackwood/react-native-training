@@ -2,7 +2,19 @@ import axios from 'axios';
 import { Alert } from 'react-native';
 import { api } from './constants';
 import { getAllUsers } from './store/actions/UsersActions';
-import { logInUser } from './store/actions/UserActions';
+
+export const logInUser = async (username, password) =>
+  axios({
+    method: 'POST',
+    url: `http://${api}/login`,
+    data: {
+      username,
+      password,
+    },
+    header: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
 
 export const deleteUser = async (userId, dispatch) => {
   await axios({
@@ -26,11 +38,8 @@ export const deleteUser = async (userId, dispatch) => {
 };
 
 export const signUpUser = async (
-  {
-    username, firstName, lastName, email, password, description,
-  },
+  { username, firstName, lastName, email, password, description },
   dispatch,
-  navigation,
 ) => {
   await axios({
     method: 'POST',
@@ -49,7 +58,7 @@ export const signUpUser = async (
   })
     .then(({ data: { message } }) => {
       Alert.alert('Sign Up', `${message}`);
-      dispatch(logInUser(username, password, navigation));
+      dispatch(logInUser(username, password));
     })
     .catch((error) => {
       Alert.alert('Error', error.message);
@@ -73,9 +82,7 @@ export const getUser = async (userId) => {
 };
 
 export const updateUser = async (
-  {
-    firstname, lastname, email, username, description,
-  },
+  { firstname, lastname, email, username, description },
   id,
   navigation,
 ) => {
