@@ -14,7 +14,9 @@ const ListItem = ({
   isActive,
   navigation,
 }) => {
-  const { username, firstname, lastname, role, id } = item;
+  const {
+    username, firstname, lastname, role, id,
+  } = item;
   const currentUser = useSelector(({ user }) => user);
   const dispatch = useDispatch();
   const currentUserRole = currentUser.role;

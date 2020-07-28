@@ -6,6 +6,7 @@ import {
   ScrollView,
   Image,
   View,
+  Alert,
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import { useSelector } from 'react-redux';
@@ -35,7 +36,7 @@ const Profile = ({
 
   useEffect(() => {
     getUserData();
-  }, [navigation]);
+  }, []);
 
   const getUserData = () => {
     getUser(userId)
@@ -79,7 +80,10 @@ const Profile = ({
             />
           </View>
           <View style={styles.usernameContainer}>
-            <Text style={styles.username}>@{username}</Text>
+            <Text style={styles.username}>
+              @
+              {username}
+            </Text>
           </View>
         </View>
         <View style={styles.section}>
@@ -87,7 +91,9 @@ const Profile = ({
             <FontAwesomeIcon icon={faUser} style={styles.icon} size={32} />
           </View>
           <Text style={styles.text}>
-            {firstname} {lastname}
+            {firstname}
+            {' '}
+            {lastname}
           </Text>
         </View>
         <View style={styles.section}>

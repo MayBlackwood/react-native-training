@@ -26,7 +26,9 @@ export const deleteUser = async (userId, dispatch) => {
 };
 
 export const signUpUser = async (
-  { username, firstName, lastName, email, password, description },
+  {
+    username, firstName, lastName, email, password, description,
+  },
   dispatch,
   navigation,
 ) => {
@@ -71,7 +73,9 @@ export const getUser = async (userId) => {
 };
 
 export const updateUser = async (
-  { firstname, lastname, email, username, description },
+  {
+    firstname, lastname, email, username, description,
+  },
   id,
   navigation,
 ) => {

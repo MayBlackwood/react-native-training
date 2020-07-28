@@ -1,8 +1,10 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
-import { useSelector } from 'react-redux';
+import {
+  StyleSheet, Text, View, SafeAreaView,
+} from 'react-native';
+
 import { Button } from 'react-native-elements';
 import { logOutUser } from '../store/actions/UserActions';
 
