@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { Alert } from 'react-native';
 import { api } from './constants';
-// import { logIn } from './store/actions/UserActions'
 
 export const logInUser = async (username, password) =>
   axios({
@@ -37,11 +36,15 @@ export const deleteUser = async (userId, dispatch) => {
     });
 };
 
-export const signUpUser = async (
-  { username, firstName, lastName, email, password, description },
-  dispatch,
-) => {
-  await axios({
+export const signUpUser = ({
+  username,
+  firstName,
+  lastName,
+  email,
+  password,
+  description,
+}) => {
+  const result = axios({
     method: 'POST',
     url: `http://${api}/sign_up`,
     data: {
@@ -55,19 +58,13 @@ export const signUpUser = async (
     header: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-  })
-    .then(({ data: { message } }) => {
-      Alert.alert('Sign Up', `${message}`);
-      dispatch(logInUser(username, password));
-    })
-    .catch((error) => {
-      Alert.alert('Error', error.message);
-      return error;
-    });
+  });
+
+  return result;
 };
 
-export const getUser = async (userId) => {
-  const result = await axios({
+export const getUser = (userId) => {
+  const result = axios({
     method: 'GET',
     url: `http://${api}/users/${userId}`,
     data: {

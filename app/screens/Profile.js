@@ -38,15 +38,13 @@ const Profile = ({
     getUserData();
   }, []);
 
-  const getUserData = () => {
-    getUser(userId)
-      .then((res) => {
-        setUserData(res.data);
-      })
-      .catch((error) => {
-        Alert.alert('Error', error.message);
-        return error;
-      });
+  const getUserData = async () => {
+    try {
+      const { data } = await getUser(userId);
+      setUserData(data);
+    } catch (error) {
+      Alert.alert('Error', error.message);
+    }
   };
 
   const currentUser = useSelector(({ user }) => user);
@@ -80,10 +78,7 @@ const Profile = ({
             />
           </View>
           <View style={styles.usernameContainer}>
-            <Text style={styles.username}>
-              @
-              {username}
-            </Text>
+            <Text style={styles.username}>@{username}</Text>
           </View>
         </View>
         <View style={styles.section}>
@@ -91,9 +86,7 @@ const Profile = ({
             <FontAwesomeIcon icon={faUser} style={styles.icon} size={32} />
           </View>
           <Text style={styles.text}>
-            {firstname}
-            {' '}
-            {lastname}
+            {firstname} {lastname}
           </Text>
         </View>
         <View style={styles.section}>
