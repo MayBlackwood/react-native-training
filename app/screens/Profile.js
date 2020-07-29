@@ -3,15 +3,18 @@ import { StyleSheet, Text, View, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import { useSelector } from 'react-redux';
+
 import HeaderImageScrollView, {
   TriggeringView,
 } from 'react-native-image-header-scroll-view';
+
 import {
   faUser,
   faEnvelope,
   faUserLock,
   faList,
 } from '@fortawesome/free-solid-svg-icons';
+
 import { getUser } from '../services';
 import ProfileLineSection from '../components/ProfileLineSection';
 import ProfileHeader from '../components/ProfileHeader';
