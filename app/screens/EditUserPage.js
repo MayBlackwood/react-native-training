@@ -42,22 +42,13 @@ const EditUserPage = ({
   navigation,
   route: {
     params: {
-      userData: {
-        username, firstname, lastname, email, description, id,
-      },
+      userData: { username, firstname, lastname, email, description, id },
     },
   },
 }) => {
   const dispatch = useDispatch();
-  const handleSaveButtonClick = async (values) => {
-    try {
-      const { data } = await updateUser(values, id, navigation);
-      Alert.alert('Success', data);
-      dispatch(updateUserData({ ...values, id }));
-      navigation.goBack();
-    } catch (error) {
-      Alert.alert('Error', error.message);
-    }
+  const handleSaveButtonClick = (values) => {
+    dispatch(updateUserData({ ...values, id }, navigation));
   };
 
   return (
@@ -72,9 +63,7 @@ const EditUserPage = ({
       validationSchema={FormSchema}
       onSubmit={(values) => handleSaveButtonClick(values)}
     >
-      {({
-        handleChange, handleSubmit, values, errors, touched,
-      }) => (
+      {({ handleChange, handleSubmit, values, errors, touched }) => (
         <SafeAreaView style={styles.container}>
           <ScrollView style={{ width: '100%' }}>
             <View style={styles.header}>
