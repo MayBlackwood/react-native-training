@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,7 +6,6 @@ import {
   ScrollView,
   Image,
   View,
-  Alert,
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import { useSelector } from 'react-redux';
@@ -17,7 +16,6 @@ import {
   faList,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { getUser } from '../services';
 
 const Profile = ({
   navigation,
@@ -28,36 +26,15 @@ const Profile = ({
   const users = useSelector(({ users }) => users);
   const currentUser = useSelector(({ user }) => user);
   const { role: currentUserRole, userId: currentUserId } = currentUser;
-  const [userData, setUserData] = useState({});
+  const user = users.find((user) => user.id === userId);
 
   const handleButtonClick = () => {
     navigation.navigate('EditUserPage', {
-      userData,
+      userData: user,
     });
   };
 
-  useEffect(() => {
-    getUserData();
-  }, [users]);
-
-  const getUserData = async () => {
-    try {
-      const { data } = await getUser(userId);
-      setUserData(data);
-    } catch (error) {
-      Alert.alert('Error', error.message);
-    }
-  };
-
-  const {
-    username,
-    firstname,
-    lastname,
-    email,
-    description,
-    id,
-    role,
-  } = userData;
+  const { username, firstname, lastname, email, description, id, role } = user;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -77,9 +54,7 @@ const Profile = ({
             />
           </View>
           <View style={styles.usernameContainer}>
-            <Text style={styles.username}>
-              {`@${username}`}
-            </Text>
+            <Text style={styles.username}>{`@${username}`}</Text>
           </View>
         </View>
         <View style={styles.section}>
