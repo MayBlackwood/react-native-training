@@ -6,15 +6,15 @@ import { updateUser } from '../../services';
 export const getAllUsers = () => async (dispatch) => {
   try {
     const { data } = await getUsers();
-    data.map((item, index) => {
-      item.orderNumber = index;
-      return item;
-    });
+    const orderedData = data.map((item, index) => ({
+      ...item,
+      orderNumber: index,
+    }));
 
     dispatch({
       type: USERS_LIST,
       payload: {
-        users: data,
+        users: orderedData,
       },
     });
   } catch (error) {

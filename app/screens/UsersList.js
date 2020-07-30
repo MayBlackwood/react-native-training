@@ -26,10 +26,6 @@ const UsersList = ({ navigation }) => {
   };
 
   useEffect(() => {
-    dispatch(getAllUsers());
-  }, []);
-
-  useEffect(() => {
     if (!users.length) {
       dispatch(getAllUsers());
     }

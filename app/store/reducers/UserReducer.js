@@ -9,12 +9,9 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case USER_LOGGED:
-      const { token, userId, role } = action.payload;
       return {
         ...state,
-        token,
-        userId,
-        role,
+        ...action.payload,
       };
 
     case USER_LOGOUT:
