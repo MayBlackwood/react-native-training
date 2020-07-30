@@ -1,4 +1,4 @@
-import { USER_LOGGED, USER_LOGOUT } from '../types';
+import { USER_LOGGED, USER_LOGOUT, USER_SIGN_UP } from '../types';
 
 const INITIAL_STATE = {
   token: '',
@@ -9,16 +9,19 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case USER_LOGGED:
-      const { token, userId, role } = action.payload;
       return {
         ...state,
-        token,
-        userId,
-        role,
+        ...action.payload,
       };
 
     case USER_LOGOUT:
       return INITIAL_STATE;
+
+    case USER_SIGN_UP:
+      return {
+        ...state,
+        ...action.payload,
+      };
 
     default:
       return state;

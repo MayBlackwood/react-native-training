@@ -41,26 +41,23 @@ export const signUpUser = ({
   email,
   password,
   description,
-}) => {
-  const result = axios({
-    method: 'POST',
-    url: `http://${api}/sign_up`,
-    data: {
-      username,
-      firstName,
-      lastName,
-      email,
-      password,
-      description,
-    },
-    header: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-  });
+}) => axios({
+  method: 'POST',
+  url: `http://${api}/sign_up`,
+  data: {
+    username,
+    firstName,
+    lastName,
+    email,
+    password,
+    description,
+  },
+  header: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  },
+});
 
-  return result;
-};
-
+// ------------
 export const getUser = (userId) => {
   const result = axios({
     method: 'GET',
@@ -75,13 +72,16 @@ export const getUser = (userId) => {
 
   return result;
 };
+// -----------------
 
-export const updateUser = async (
-  {
-    firstname, lastname, email, username, description,
-  },
+export const updateUser = async ({
+  firstname,
+  lastname,
+  email,
+  username,
+  description,
   id,
-) => {
+}) => {
   const result = await axios({
     method: 'PUT',
     url: `http://${api}/users/${id}`,

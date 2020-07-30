@@ -5,8 +5,6 @@ import {
   ScrollView,
   View,
   Image,
-  Alert,
-  Text,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
@@ -19,7 +17,6 @@ import HeaderImageScrollView, {
 } from 'react-native-image-header-scroll-view';
 
 import FormInput from '../components/FormInput';
-import { updateUser } from '../services';
 import { updateUserData } from '../store/actions/UsersActions';
 
 const FormSchema = Yup.object().shape({
@@ -62,15 +59,8 @@ const EditUserPage = ({
   },
 }) => {
   const dispatch = useDispatch();
-  const handleSaveButtonClick = async (values) => {
-    try {
-      const { data } = await updateUser(values, id, navigation);
-      Alert.alert('Success', data);
-      dispatch(updateUserData({ ...values, id }));
-      navigation.goBack();
-    } catch (error) {
-      Alert.alert('Error', error.message);
-    }
+  const handleSaveButtonClick = (values) => {
+    dispatch(updateUserData({ ...values, id }, navigation));
   };
 
   const profileIcon = userImage

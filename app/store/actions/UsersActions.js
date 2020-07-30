@@ -1,19 +1,19 @@
 import { Alert } from 'react-native';
 import { USERS_LIST, SORT_USERS, USER_UPDATE } from '../types';
-import { getUsers } from '../../services';
+import { getUsers, updateUser } from '../../services';
 
 export const getAllUsers = () => async (dispatch) => {
   try {
     const { data } = await getUsers();
-    data.map((item, index) => {
-      item.orderNumber = index;
-      return item;
-    });
+    const orderedData = data.map((item, index) => ({
+      ...item,
+      orderNumber: index,
+    }));
 
     dispatch({
       type: USERS_LIST,
       payload: {
-        users: data,
+        users: orderedData,
       },
     });
   } catch (error) {
@@ -30,11 +30,18 @@ export const updateOrder = (usersData) => (dispatch) => {
   });
 };
 
-export const updateUserData = (userData) => (dispatch) => {
-  dispatch({
-    type: USER_UPDATE,
-    payload: {
-      user: userData,
-    },
-  });
+export const updateUserData = (userData, navigation) => async (dispatch) => {
+  try {
+    const { data } = await updateUser(userData);
+    Alert.alert('Success', data);
+    dispatch({
+      type: USER_UPDATE,
+      payload: {
+        user: userData,
+      },
+    });
+    navigation.goBack();
+  } catch (error) {
+    Alert.alert('Error', error.message);
+  }
 };

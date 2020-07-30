@@ -28,25 +28,12 @@ const Profile = ({
   const users = useSelector(({ users }) => users);
   const currentUser = useSelector(({ user }) => user);
   const { role: currentUserRole, userId: currentUserId } = currentUser;
-  const [userData, setUserData] = useState({});
+  const user = users.find((user) => user.id === userId);
 
   const handleButtonClick = () => {
     navigation.navigate('EditUserPage', {
-      userData,
+      userData: user,
     });
-  };
-
-  useEffect(() => {
-    getUserData();
-  }, [users]);
-
-  const getUserData = async () => {
-    try {
-      const { data } = await getUser(userId);
-      setUserData(data);
-    } catch (error) {
-      Alert.alert('Error', error.message);
-    }
   };
 
   const {
