@@ -10,6 +10,12 @@ import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { Button } from 'react-native-elements';
 import * as Yup from 'yup';
+import * as Animatable from 'react-native-animatable';
+
+import HeaderImageScrollView, {
+  TriggeringView,
+} from 'react-native-image-header-scroll-view';
+
 import FormInput from '../components/FormInput';
 import { updateUserData } from '../store/actions/UsersActions';
 
@@ -41,7 +47,13 @@ const EditUserPage = ({
   route: {
     params: {
       userData: {
-        username, firstname, lastname, email, description, id,
+        username,
+        firstname,
+        lastname,
+        email,
+        description,
+        id,
+        userImage,
       },
     },
   },
@@ -50,6 +62,12 @@ const EditUserPage = ({
   const handleSaveButtonClick = (values) => {
     dispatch(updateUserData({ ...values, id }, navigation));
   };
+
+  const profileIcon = userImage
+    ? require(`../images/back.jpg`)
+    : require(`../images/plant.png`);
+
+  let navTitleView;
 
   return (
     <Formik
@@ -63,11 +81,13 @@ const EditUserPage = ({
       validationSchema={FormSchema}
       onSubmit={(values) => handleSaveButtonClick(values)}
     >
-      {({
-        handleChange, handleSubmit, values, errors, touched,
-      }) => (
-        <SafeAreaView style={styles.container}>
-          <ScrollView style={{ width: '100%' }}>
+      {({ handleChange, handleSubmit, values, errors, touched }) => (
+        <HeaderImageScrollView
+          maxHeight={200}
+          minHeight={60}
+          headerImage={require('../images/back.jpg')}
+          fadeOutForeground
+          renderForeground={() => (
             <View style={styles.header}>
               <View style={styles.imageContainer}>
                 <Image
@@ -76,28 +96,28 @@ const EditUserPage = ({
                 />
               </View>
             </View>
+          )}
+        >
+          {formConfig.map(({ value, title }) => (
+            <View style={styles.section} key={value}>
+              <FormInput
+                title={title}
+                value={value}
+                handleChange={handleChange}
+                values={values}
+                errors={errors}
+                touched={touched}
+                key={value}
+              />
+            </View>
+          ))}
 
-            {formConfig.map(({ value, title }) => (
-              <View style={styles.section} key={value}>
-                <FormInput
-                  title={title}
-                  value={value}
-                  handleChange={handleChange}
-                  values={values}
-                  errors={errors}
-                  touched={touched}
-                  key={value}
-                />
-              </View>
-            ))}
-
-            <Button
-              title="Save Changes"
-              onPress={handleSubmit}
-              buttonStyle={styles.confirmButton}
-            />
-          </ScrollView>
-        </SafeAreaView>
+          <Button
+            title="Save Changes"
+            onPress={handleSubmit}
+            buttonStyle={styles.confirmButton}
+          />
+        </HeaderImageScrollView>
       )}
     </Formik>
   );
@@ -115,9 +135,7 @@ const styles = StyleSheet.create({
     height: 200,
     alignItems: 'center',
     flexDirection: 'row',
-    backgroundColor: '#BF5471',
     justifyContent: 'space-around',
-    marginBottom: 10,
   },
   imageContainer: {
     width: 120,
