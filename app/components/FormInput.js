@@ -9,6 +9,9 @@ const FormInput = ({
   <View
     style={{
       marginBottom: 20,
+      width: '90%',
+      marginLeft: 'auto',
+      marginRight: 'auto',
     }}
   >
     <Text style={styles.label}>{title}</Text>

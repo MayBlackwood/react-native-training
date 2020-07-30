@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { signUpUser } from '../services';
 
 import {
   SafeAreaView,
@@ -12,13 +11,13 @@ import {
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import FormInput from '../components/FormInput';
+import { signUp } from '../store/actions/UserActions';
 
 const SignUpSchema = Yup.object().shape({
   username: Yup.string()
     .required('* Required')
     .min(2, 'Too Short!')
-    .max(40, 'Too Long!')
-    .matches(/[a-zA-Z]/, 'Username can only contain Latin letters.'),
+    .max(40, 'Too Long!'),
   firstName: Yup.string()
     .required('* Required')
     .min(2, 'Too Short!')
@@ -51,7 +50,7 @@ const SignUpScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const handleButtonClick = (values) => {
-    signUpUser(values, dispatch);
+    dispatch(signUp(values, navigation));
   };
 
   return (
@@ -68,7 +67,9 @@ const SignUpScreen = ({ navigation }) => {
       validationSchema={SignUpSchema}
       onSubmit={(values) => handleButtonClick(values)}
     >
-      {({ handleChange, handleSubmit, values, errors, touched }) => (
+      {({
+        handleChange, handleSubmit, values, errors, touched,
+      }) => (
         <SafeAreaView style={styles.container}>
           <ScrollView style={{ width: '100%' }}>
             <View

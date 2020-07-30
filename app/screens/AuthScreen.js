@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import { Button } from 'react-native-elements';
-import { logInUser } from '../store/actions/UserActions';
+import { logIn } from '../store/actions/UserActions';
 import FormInput from '../components/FormInput';
 
 const LogInSchema = Yup.object().shape({
@@ -26,7 +26,7 @@ const AuthScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const handleLogInButton = ({ username, password }) => {
-    dispatch(logInUser(username, password, navigation));
+    dispatch(logIn(username, password, navigation));
   };
 
   return (

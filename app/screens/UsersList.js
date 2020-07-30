@@ -26,16 +26,14 @@ const UsersList = ({ navigation }) => {
   };
 
   useEffect(() => {
-    dispatch(getAllUsers());
-  }, []);
-
-  useEffect(() => {
     if (!users.length) {
       dispatch(getAllUsers());
     }
   }, [users]);
 
-  const renderItem = ({ item, index, move, moveEnd, isActive }) => (
+  const renderItem = ({
+    item, index, move, moveEnd, isActive,
+  }) => (
     <ListItem
       item={item}
       index={index}

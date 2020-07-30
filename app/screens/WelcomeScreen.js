@@ -1,18 +1,22 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import {
+  StyleSheet, Text, View, SafeAreaView,
+} from 'react-native';
+
 import { Button } from 'react-native-elements';
 import { logOutUser } from '../store/actions/UserActions';
 
 const WelcomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
+  const userId = useSelector(({ user: { userId } }) => userId);
   const logOut = () => {
     dispatch(logOutUser());
   };
 
   const goToButton = (path) => {
-    navigation.navigate(path);
+    navigation.navigate(path, { userId });
   };
 
   return (
@@ -23,7 +27,7 @@ const WelcomeScreen = ({ navigation }) => {
         <Button
           buttonStyle={styles.button}
           title="User Profile"
-          onPress={() => goToButton('CurrentUserProfile')}
+          onPress={() => goToButton('Profile')}
         />
         <Button
           buttonStyle={styles.button}

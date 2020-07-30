@@ -1,31 +1,24 @@
-import axios from 'axios';
 import { Alert } from 'react-native';
-import { USERS_LIST, SORT_USERS } from '../types';
-import { api } from '../../constants';
+import { USERS_LIST, SORT_USERS, USER_UPDATE } from '../types';
+import { getUsers, updateUser } from '../../services';
 
 export const getAllUsers = () => async (dispatch) => {
-  await axios({
-    method: 'GET',
-    url: `http://${api}/users`,
-    header: { 'Content-Type': 'application/json' },
-  })
-    .then(({ data }) => {
-      data.map((item, index) => {
-        item.orderNumber = index;
-        return item;
-      });
+  try {
+    const { data } = await getUsers();
+    const orderedData = data.map((item, index) => ({
+      ...item,
+      orderNumber: index,
+    }));
 
-      dispatch({
-        type: USERS_LIST,
-        payload: {
-          users: data,
-        },
-      });
-    })
-    .catch((error) => {
-      Alert.alert('Error', error.message);
-      return error;
+    dispatch({
+      type: USERS_LIST,
+      payload: {
+        users: orderedData,
+      },
     });
+  } catch (error) {
+    Alert.alert('Error', error.message);
+  }
 };
 
 export const updateOrder = (usersData) => (dispatch) => {
@@ -35,4 +28,20 @@ export const updateOrder = (usersData) => (dispatch) => {
       users: usersData,
     },
   });
+};
+
+export const updateUserData = (userData, navigation) => async (dispatch) => {
+  try {
+    const { data } = await updateUser(userData);
+    Alert.alert('Success', data);
+    dispatch({
+      type: USER_UPDATE,
+      payload: {
+        user: userData,
+      },
+    });
+    navigation.goBack();
+  } catch (error) {
+    Alert.alert('Error', error.message);
+  }
 };

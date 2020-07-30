@@ -1,47 +1,45 @@
-import axios from 'axios';
-
 import { Alert } from 'react-native';
-import { USER_LOGGED, USER_LOGOUT } from '../types';
-import { api } from '../../constants';
+import { USER_LOGGED, USER_LOGOUT, USER_SIGN_UP } from '../types';
+import { logInUser, signUpUser } from '../../services';
 
-export const logInUser = (username, password, navigation) => async (
-  dispatch,
-) => {
-  await axios({
-    method: 'POST',
-    url: `http://${api}/login`,
-    data: {
-      username,
-      password,
-    },
-    header: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-  })
-    .then(({
+export const logIn = (username, password, navigation) => async (dispatch) => {
+  try {
+    const response = await logInUser(username, password);
+    const {
       data: {
         token, id, message, role,
       },
-    }) => {
-      dispatch({
-        type: USER_LOGGED,
-        payload: {
-          token,
-          userId: id,
-          role,
-        },
-      });
-      Alert.alert('Successful', message);
-      navigation.navigate('CurrentUserProfile');
-    })
-    .catch((error) => {
-      Alert.alert('Error', error.response.data.message);
-      return error.response;
-    });
+    } = response;
+    dispatch({ type: USER_LOGGED, payload: { token, userId: id, role } });
+    Alert.alert('Successful', message);
+    navigation.navigate('Home');
+  } catch (error) {
+    Alert.alert('Error', error.response.data.message);
+  }
 };
 
 export const logOutUser = () => (dispatch) => {
   dispatch({
     type: USER_LOGOUT,
   });
+};
+
+export const signUp = (values, navigation) => async (dispatch) => {
+  try {
+    const {
+      data: {
+        id, message, role, token,
+      },
+    } = await signUpUser(values);
+
+    dispatch({
+      type: USER_SIGN_UP,
+      payload: { token, userId: id, role },
+    });
+
+    Alert.alert('Success', message);
+    navigation.navigate('Home');
+  } catch (error) {
+    Alert.alert('Error', error.message);
+  }
 };
