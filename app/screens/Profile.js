@@ -34,7 +34,9 @@ const Profile = ({
     });
   };
 
-  const { username, firstname, lastname, email, description, id, role } = user;
+  const {
+    username, firstname, lastname, email, description, id, role,
+  } = user;
 
   return (
     <SafeAreaView style={styles.container}>

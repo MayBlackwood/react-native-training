@@ -8,12 +8,10 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Alert,
 } from 'react-native';
 import { Button } from 'react-native-elements';
-import { signUpUser } from '../services';
 import FormInput from '../components/FormInput';
-import { logIn } from '../store/actions/UserActions';
+import { signUp } from '../store/actions/UserActions';
 
 const SignUpSchema = Yup.object().shape({
   username: Yup.string()
@@ -51,18 +49,8 @@ const SignUpSchema = Yup.object().shape({
 const SignUpScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  const handleButtonClick = async (values) => {
-    const { username, password } = values;
-    try {
-      const {
-        data: { message },
-      } = await signUpUser(values);
-      Alert.alert('Sign Up', `${message}`);
-      dispatch(logIn(username, password));
-      navigation.navigate('Home');
-    } catch (error) {
-      Alert.alert('Error', error.message);
-    }
+  const handleButtonClick = (values) => {
+    dispatch(signUp(values, navigation));
   };
 
   return (

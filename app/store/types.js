@@ -3,3 +3,4 @@ export const USER_LOGOUT = 'user_logout';
 export const USERS_LIST = 'users_list';
 export const SORT_USERS = 'sort_users';
 export const USER_UPDATE = 'user_update';
+export const USER_SIGN_UP = 'user_sign_up';

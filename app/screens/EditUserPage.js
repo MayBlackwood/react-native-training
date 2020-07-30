@@ -5,14 +5,12 @@ import {
   ScrollView,
   View,
   Image,
-  Alert,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { Button } from 'react-native-elements';
 import * as Yup from 'yup';
 import FormInput from '../components/FormInput';
-import { updateUser } from '../services';
 import { updateUserData } from '../store/actions/UsersActions';
 
 const FormSchema = Yup.object().shape({
@@ -42,7 +40,9 @@ const EditUserPage = ({
   navigation,
   route: {
     params: {
-      userData: { username, firstname, lastname, email, description, id },
+      userData: {
+        username, firstname, lastname, email, description, id,
+      },
     },
   },
 }) => {
@@ -63,7 +63,9 @@ const EditUserPage = ({
       validationSchema={FormSchema}
       onSubmit={(values) => handleSaveButtonClick(values)}
     >
-      {({ handleChange, handleSubmit, values, errors, touched }) => (
+      {({
+        handleChange, handleSubmit, values, errors, touched,
+      }) => (
         <SafeAreaView style={styles.container}>
           <ScrollView style={{ width: '100%' }}>
             <View style={styles.header}>

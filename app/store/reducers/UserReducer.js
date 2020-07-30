@@ -1,4 +1,4 @@
-import { USER_LOGGED, USER_LOGOUT } from '../types';
+import { USER_LOGGED, USER_LOGOUT, USER_SIGN_UP } from '../types';
 
 const INITIAL_STATE = {
   token: '',
@@ -16,6 +16,12 @@ export default (state = INITIAL_STATE, action) => {
 
     case USER_LOGOUT:
       return INITIAL_STATE;
+
+    case USER_SIGN_UP:
+      return {
+        ...state,
+        ...action.payload,
+      };
 
     default:
       return state;

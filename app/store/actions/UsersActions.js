@@ -1,7 +1,6 @@
 import { Alert } from 'react-native';
 import { USERS_LIST, SORT_USERS, USER_UPDATE } from '../types';
-import { getUsers } from '../../services';
-import { updateUser } from '../../services';
+import { getUsers, updateUser } from '../../services';
 
 export const getAllUsers = () => async (dispatch) => {
   try {
