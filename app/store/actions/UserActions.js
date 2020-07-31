@@ -17,7 +17,9 @@ export const logIn = (username, password, navigation) => async (dispatch) => {
     });
     const response = await logInUser(username, password);
     const {
-      data: { token, id, message, role },
+      data: {
+        token, id, message, role,
+      },
     } = response;
     dispatch({ type: USER_LOGGED, payload: { token, userId: id, role } });
     Alert.alert('Successful', message);
@@ -41,7 +43,9 @@ export const signUp = (values, navigation) => async (dispatch) => {
   try {
     dispatch({ type: SIGN_UP_REQUEST });
     const {
-      data: { id, message, role, token },
+      data: {
+        id, message, role, token,
+      },
     } = await signUpUser(values);
 
     dispatch({

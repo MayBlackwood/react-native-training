@@ -5,6 +5,8 @@ import {
   USERS_FAILURE,
   SORT_USERS,
   USER_UPDATE,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_FAILURE,
 } from '../types';
 import { getUsers, updateUser } from '../../services';
 
@@ -44,6 +46,7 @@ export const updateOrder = (usersData) => (dispatch) => {
 
 export const updateUserData = (userData, navigation) => async (dispatch) => {
   try {
+    dispatch({ type: USER_UPDATE_REQUEST });
     const { data } = await updateUser(userData);
     Alert.alert('Success', data);
     dispatch({
@@ -54,6 +57,7 @@ export const updateUserData = (userData, navigation) => async (dispatch) => {
     });
     navigation.goBack();
   } catch (error) {
-    Alert.alert('Error', error.message);
+    dispatch({ type: USER_UPDATE_FAILURE, error });
+    Alert.alert('Error', error.response.data.message || error.response.data);
   }
 };

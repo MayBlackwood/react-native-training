@@ -4,6 +4,8 @@ import {
   USERS_FAILURE,
   SORT_USERS,
   USER_UPDATE,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_FAILURE,
 } from '../types';
 
 const INITIAL_STATE = {
@@ -44,9 +46,17 @@ export default (state = INITIAL_STATE, action) => {
         isLoading: false,
       };
 
+    case USER_UPDATE_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      };
+
     case USER_UPDATE:
       return {
         ...state,
+        isLoading: false,
         data: state.data.map((user) => {
           if (user.id === action.payload.user.id) {
             return {
@@ -57,6 +67,13 @@ export default (state = INITIAL_STATE, action) => {
 
           return user;
         }),
+      };
+
+    case USER_UPDATE_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.error,
       };
 
     default:

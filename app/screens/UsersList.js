@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import sortBy from 'lodash.sortby';
 import DraggableFlatList from 'react-native-draggable-flatlist';
@@ -33,7 +33,9 @@ const UsersList = ({ navigation }) => {
     }
   }, [users]);
 
-  const renderItem = ({ item, index, move, moveEnd, isActive }) => (
+  const renderItem = ({
+    item, index, move, moveEnd, isActive,
+  }) => (
     <ListItem
       item={item}
       index={index}

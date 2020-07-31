@@ -38,7 +38,9 @@ const AuthScreen = ({ navigation }) => {
           validationSchema={LogInSchema}
           onSubmit={(values) => handleLogInButton(values)}
         >
-          {({ handleChange, handleSubmit, values, errors, touched }) => (
+          {({
+            handleChange, handleSubmit, values, errors, touched,
+          }) => (
             <SafeAreaView style={styles.container}>
               <View style={{ width: '70%' }}>
                 {logInFormConfig.map(({ value, title }) => (
