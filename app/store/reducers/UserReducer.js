@@ -4,6 +4,8 @@ import {
   LOGIN_FAILURE,
   USER_LOGOUT,
   USER_SIGN_UP,
+  SIGN_UP_REQUEST,
+  SIGN_UP_FAILURE,
 } from '../types';
 
 const INITIAL_STATE = {
@@ -28,7 +30,6 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         ...action.payload,
         isLoading: false,
-        error: null,
       };
 
     case LOGIN_FAILURE:
@@ -36,16 +37,30 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         error: action.error,
-        // error: null
       };
 
     case USER_LOGOUT:
       return INITIAL_STATE;
 
+    case SIGN_UP_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      };
+
     case USER_SIGN_UP:
       return {
         ...state,
         ...action.payload,
+        isLoading: false,
+      };
+
+    case SIGN_UP_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.error,
       };
 
     default:

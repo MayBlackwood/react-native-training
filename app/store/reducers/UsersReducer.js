@@ -18,6 +18,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: true,
+        error: null,
       };
 
     case USERS_LOADED:
@@ -26,7 +27,6 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         data,
         isLoading: false,
-        error: null,
       };
 
     case USERS_FAILURE:

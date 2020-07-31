@@ -5,6 +5,8 @@ import {
   LOGIN_FAILURE,
   USER_LOGOUT,
   USER_SIGN_UP,
+  SIGN_UP_REQUEST,
+  SIGN_UP_FAILURE,
 } from '../types';
 import { logInUser, signUpUser } from '../../services';
 
@@ -25,7 +27,7 @@ export const logIn = (username, password, navigation) => async (dispatch) => {
       type: LOGIN_FAILURE,
       error,
     });
-    Alert.alert('Error', error.response.data.message);
+    Alert.alert('Error', error.response.data.message || error.response.data);
   }
 };
 
@@ -37,6 +39,7 @@ export const logOutUser = () => (dispatch) => {
 
 export const signUp = (values, navigation) => async (dispatch) => {
   try {
+    dispatch({ type: SIGN_UP_REQUEST });
     const {
       data: { id, message, role, token },
     } = await signUpUser(values);
@@ -49,6 +52,7 @@ export const signUp = (values, navigation) => async (dispatch) => {
     Alert.alert('Success', message);
     navigation.navigate('Home');
   } catch (error) {
-    Alert.alert('Error', error.message);
+    dispatch({ type: SIGN_UP_FAILURE, error });
+    Alert.alert('Error', error.response.data.message || error.response.data);
   }
 };
