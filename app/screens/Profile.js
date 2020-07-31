@@ -23,7 +23,8 @@ const Profile = ({
     params: { userId },
   },
 }) => {
-  const users = useSelector(({ users }) => users);
+  const usersState = useSelector(({ users }) => users);
+  const users = usersState.data;
   const currentUser = useSelector(({ user }) => user);
   const { role: currentUserRole, userId: currentUserId } = currentUser;
   const user = users.find((user) => user.id === userId);
