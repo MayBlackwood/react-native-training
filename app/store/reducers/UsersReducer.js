@@ -26,6 +26,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         data,
         isLoading: false,
+        error: null,
       };
 
     case USERS_FAILURE:

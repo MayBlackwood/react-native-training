@@ -1,4 +1,6 @@
 export const USER_LOGGED = 'user_logged';
+export const LOGIN_REQUEST = 'login_request';
+export const LOGIN_FAILURE = 'login_failure';
 export const USER_LOGOUT = 'user_logout';
 export const USERS_LOADED = 'users_loaded';
 export const USERS_REQUEST = 'users_request';

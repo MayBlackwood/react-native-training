@@ -1,15 +1,14 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { Fragment } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-import {
-  SafeAreaView, StyleSheet, View,
-} from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 import { Button } from 'react-native-elements';
 import { logIn } from '../store/actions/UserActions';
 import FormInput from '../components/FormInput';
+import Preloader from '../components/Preloader';
 
 const LogInSchema = Yup.object().shape({
   username: Yup.string()
@@ -23,6 +22,7 @@ const LogInSchema = Yup.object().shape({
 });
 
 const AuthScreen = ({ navigation }) => {
+  const { isLoading } = useSelector(({ user }) => user);
   const dispatch = useDispatch();
 
   const handleLogInButton = ({ username, password }) => {
@@ -30,36 +30,39 @@ const AuthScreen = ({ navigation }) => {
   };
 
   return (
-    <Formik
-      initialValues={{ username: '', password: '' }}
-      validationSchema={LogInSchema}
-      onSubmit={(values) => handleLogInButton(values)}
-    >
-      {({
-        handleChange, handleSubmit, values, errors, touched,
-      }) => (
-        <SafeAreaView style={styles.container}>
-          <View style={{ width: '70%' }}>
-            {logInFormConfig.map(({ value, title }) => (
-              <FormInput
-                title={title}
-                value={value}
-                handleChange={handleChange}
-                values={values}
-                errors={errors}
-                touched={touched}
-                key={value}
+    <Fragment>
+      {isLoading && <Preloader />}
+      {!isLoading && (
+        <Formik
+          initialValues={{ username: '', password: '' }}
+          validationSchema={LogInSchema}
+          onSubmit={(values) => handleLogInButton(values)}
+        >
+          {({ handleChange, handleSubmit, values, errors, touched }) => (
+            <SafeAreaView style={styles.container}>
+              <View style={{ width: '70%' }}>
+                {logInFormConfig.map(({ value, title }) => (
+                  <FormInput
+                    title={title}
+                    value={value}
+                    handleChange={handleChange}
+                    values={values}
+                    errors={errors}
+                    touched={touched}
+                    key={value}
+                  />
+                ))}
+              </View>
+              <Button
+                title="Log In"
+                onPress={handleSubmit}
+                buttonStyle={styles.logInButton}
               />
-            ))}
-          </View>
-          <Button
-            title="Log In"
-            onPress={handleSubmit}
-            buttonStyle={styles.logInButton}
-          />
-        </SafeAreaView>
+            </SafeAreaView>
+          )}
+        </Formik>
       )}
-    </Formik>
+    </Fragment>
   );
 };
 
