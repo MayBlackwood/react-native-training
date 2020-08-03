@@ -1,17 +1,15 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { Fragment } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  ScrollView,
+  SafeAreaView, StyleSheet, View, ScrollView,
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import FormInput from '../components/FormInput';
 import { signUp } from '../store/actions/UserActions';
+import Preloader from '../components/Preloader';
 
 const SignUpSchema = Yup.object().shape({
   username: Yup.string()
@@ -47,6 +45,7 @@ const SignUpSchema = Yup.object().shape({
 });
 
 const SignUpScreen = ({ navigation }) => {
+  const { isLoading } = useSelector(({ user }) => user);
   const dispatch = useDispatch();
 
   const handleButtonClick = (values) => {
@@ -54,53 +53,58 @@ const SignUpScreen = ({ navigation }) => {
   };
 
   return (
-    <Formik
-      initialValues={{
-        username: '',
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        passwordConfirmation: '',
-        description: '',
-      }}
-      validationSchema={SignUpSchema}
-      onSubmit={(values) => handleButtonClick(values)}
-    >
-      {({
-        handleChange, handleSubmit, values, errors, touched,
-      }) => (
-        <SafeAreaView style={styles.container}>
-          <ScrollView style={{ width: '100%' }}>
-            <View
-              style={{
-                width: '80%',
-                marginLeft: 'auto',
-                marginRight: 'auto',
-                marginTop: 30,
-              }}
-            >
-              {signUpFormConfig.map(({ value, title }) => (
-                <FormInput
-                  title={title}
-                  value={value}
-                  handleChange={handleChange}
-                  values={values}
-                  errors={errors}
-                  touched={touched}
-                  key={value}
+    <Fragment>
+      {isLoading && <Preloader />}
+      {!isLoading && (
+        <Formik
+          initialValues={{
+            username: '',
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            passwordConfirmation: '',
+            description: '',
+          }}
+          validationSchema={SignUpSchema}
+          onSubmit={(values) => handleButtonClick(values)}
+        >
+          {({
+            handleChange, handleSubmit, values, errors, touched,
+          }) => (
+            <SafeAreaView style={styles.container}>
+              <ScrollView style={{ width: '100%' }}>
+                <View
+                  style={{
+                    width: '80%',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                    marginTop: 30,
+                  }}
+                >
+                  {signUpFormConfig.map(({ value, title }) => (
+                    <FormInput
+                      title={title}
+                      value={value}
+                      handleChange={handleChange}
+                      values={values}
+                      errors={errors}
+                      touched={touched}
+                      key={value}
+                    />
+                  ))}
+                </View>
+                <Button
+                  title="Sign Up"
+                  onPress={handleSubmit}
+                  buttonStyle={styles.signUpButton}
                 />
-              ))}
-            </View>
-            <Button
-              title="Sign Up"
-              onPress={handleSubmit}
-              buttonStyle={styles.signUpButton}
-            />
-          </ScrollView>
-        </SafeAreaView>
+              </ScrollView>
+            </SafeAreaView>
+          )}
+        </Formik>
       )}
-    </Formik>
+    </Fragment>
   );
 };
 

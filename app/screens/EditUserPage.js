@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -6,12 +6,13 @@ import {
   View,
   Image,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { Button } from 'react-native-elements';
 import * as Yup from 'yup';
 import FormInput from '../components/FormInput';
 import { updateUserData } from '../store/actions/UsersActions';
+import Preloader from '../components/Preloader';
 
 const FormSchema = Yup.object().shape({
   username: Yup.string()
@@ -46,60 +47,67 @@ const EditUserPage = ({
     },
   },
 }) => {
+  const { isLoading } = useSelector(({ users }) => users);
   const dispatch = useDispatch();
   const handleSaveButtonClick = (values) => {
     dispatch(updateUserData({ ...values, id }, navigation));
   };
 
   return (
-    <Formik
-      initialValues={{
-        username,
-        firstname,
-        lastname,
-        email,
-        description,
-      }}
-      validationSchema={FormSchema}
-      onSubmit={(values) => handleSaveButtonClick(values)}
-    >
-      {({
-        handleChange, handleSubmit, values, errors, touched,
-      }) => (
-        <SafeAreaView style={styles.container}>
-          <ScrollView style={{ width: '100%' }}>
-            <View style={styles.header}>
-              <View style={styles.imageContainer}>
-                <Image
-                  style={styles.image}
-                  source={require('../images/plant.png')}
-                />
-              </View>
-            </View>
+    <Fragment>
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        <Formik
+          initialValues={{
+            username,
+            firstname,
+            lastname,
+            email,
+            description,
+          }}
+          validationSchema={FormSchema}
+          onSubmit={(values) => handleSaveButtonClick(values)}
+        >
+          {({
+            handleChange, handleSubmit, values, errors, touched,
+          }) => (
+            <SafeAreaView style={styles.container}>
+              <ScrollView style={{ width: '100%' }}>
+                <View style={styles.header}>
+                  <View style={styles.imageContainer}>
+                    <Image
+                      style={styles.image}
+                      source={require('../images/plant.png')}
+                    />
+                  </View>
+                </View>
 
-            {formConfig.map(({ value, title }) => (
-              <View style={styles.section} key={value}>
-                <FormInput
-                  title={title}
-                  value={value}
-                  handleChange={handleChange}
-                  values={values}
-                  errors={errors}
-                  touched={touched}
-                  key={value}
-                />
-              </View>
-            ))}
+                {formConfig.map(({ value, title }) => (
+                  <View style={styles.section} key={value}>
+                    <FormInput
+                      title={title}
+                      value={value}
+                      handleChange={handleChange}
+                      values={values}
+                      errors={errors}
+                      touched={touched}
+                      key={value}
+                    />
+                  </View>
+                ))}
 
-            <Button
-              title="Save Changes"
-              onPress={handleSubmit}
-              buttonStyle={styles.confirmButton}
-            />
-          </ScrollView>
-        </SafeAreaView>
+                <Button
+                  title="Save Changes"
+                  onPress={handleSubmit}
+                  buttonStyle={styles.confirmButton}
+                />
+              </ScrollView>
+            </SafeAreaView>
+          )}
+        </Formik>
       )}
-    </Formik>
+    </Fragment>
   );
 };
 

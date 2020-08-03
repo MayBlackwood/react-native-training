@@ -5,9 +5,11 @@ import sortBy from 'lodash.sortby';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import { getAllUsers, updateOrder } from '../store/actions/UsersActions';
 import ListItem from '../components/ListItem';
+import Preloader from '../components/Preloader';
+import ErrorMessage from '../components/ErrorMessage';
 
 const UsersList = ({ navigation }) => {
-  const users = useSelector(({ users }) => users);
+  const { data: users, isLoading, error } = useSelector(({ users }) => users);
   const dispatch = useDispatch();
 
   const changeOrderFunction = ({ from, to }) => {
@@ -46,12 +48,16 @@ const UsersList = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <DraggableFlatList
-        data={users}
-        renderItem={renderItem}
-        keyExtractor={(item) => `draggable-item-${item.id}`}
-        onMoveEnd={(params) => changeOrderFunction(params)}
-      />
+      {isLoading && <Preloader />}
+      {!isLoading && error && <ErrorMessage error={error.message} />}
+      {!isLoading && !error && users && (
+        <DraggableFlatList
+          data={users}
+          renderItem={renderItem}
+          keyExtractor={(item) => `draggable-item-${item.id}`}
+          onMoveEnd={(params) => changeOrderFunction(params)}
+        />
+      )}
     </View>
   );
 };

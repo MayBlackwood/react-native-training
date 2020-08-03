@@ -57,7 +57,6 @@ export const signUpUser = ({
   },
 });
 
-// ------------
 export const getUser = (userId) => {
   const result = axios({
     method: 'GET',
@@ -72,7 +71,6 @@ export const getUser = (userId) => {
 
   return result;
 };
-// -----------------
 
 export const updateUser = async ({
   firstname,
