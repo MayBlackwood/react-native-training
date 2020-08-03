@@ -6,7 +6,7 @@ import {
   USER_UPDATE,
   USER_UPDATE_REQUEST,
   USER_UPDATE_FAILURE,
-} from '../types';
+} from '../constants';
 
 const INITIAL_STATE = {
   data: [],

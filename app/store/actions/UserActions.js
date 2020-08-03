@@ -7,7 +7,7 @@ import {
   USER_SIGN_UP,
   SIGN_UP_REQUEST,
   SIGN_UP_FAILURE,
-} from '../types';
+} from '../constants';
 import { logInUser, signUpUser } from '../../services';
 
 export const logIn = (username, password, navigation) => async (dispatch) => {

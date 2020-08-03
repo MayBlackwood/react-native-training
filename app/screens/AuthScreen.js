@@ -31,8 +31,9 @@ const AuthScreen = ({ navigation }) => {
 
   return (
     <Fragment>
-      {isLoading && <Preloader />}
-      {!isLoading && (
+      {isLoading ? (
+        <Preloader />
+      ) : (
         <Formik
           initialValues={{ username: '', password: '' }}
           validationSchema={LogInSchema}

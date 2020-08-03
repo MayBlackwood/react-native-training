@@ -6,7 +6,7 @@ import {
   USER_SIGN_UP,
   SIGN_UP_REQUEST,
   SIGN_UP_FAILURE,
-} from '../types';
+} from '../constants';
 
 const INITIAL_STATE = {
   token: '',

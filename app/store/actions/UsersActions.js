@@ -7,7 +7,7 @@ import {
   USER_UPDATE,
   USER_UPDATE_REQUEST,
   USER_UPDATE_FAILURE,
-} from '../types';
+} from '../constants';
 import { getUsers, updateUser } from '../../services';
 
 export const getAllUsers = () => async (dispatch) => {

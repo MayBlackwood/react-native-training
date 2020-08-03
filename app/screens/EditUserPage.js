@@ -55,8 +55,9 @@ const EditUserPage = ({
 
   return (
     <Fragment>
-      {isLoading && <Preloader />}
-      {!isLoading && (
+      {isLoading ? (
+        <Preloader />
+      ) : (
         <Formik
           initialValues={{
             username,
