@@ -39,7 +39,7 @@ export default (state = INITIAL_STATE, action) => {
       };
 
     case SORT_USERS:
-      const sortedUsers = action.payload.users;
+      const sortedUsers = action.payload.data;
       return {
         ...state,
         data: sortedUsers,
