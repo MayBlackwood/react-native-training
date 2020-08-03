@@ -1,23 +1,25 @@
 import axios from 'axios';
 import { api } from './constants';
 
-export const logInUser = (username, password) => axios({
-  method: 'POST',
-  url: `http://${api}/login`,
-  data: {
-    username,
-    password,
-  },
-  header: {
-    'Content-Type': 'application/x-www-form-urlencoded',
-  },
-});
+export const logInUser = (username, password) =>
+  axios({
+    method: 'POST',
+    url: `http://${api}/login`,
+    data: {
+      username,
+      password,
+    },
+    header: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
 
-export const getUsers = () => axios({
-  method: 'GET',
-  url: `http://${api}/users`,
-  header: { 'Content-Type': 'application/json' },
-});
+export const getUsers = () =>
+  axios({
+    method: 'GET',
+    url: `http://${api}/users`,
+    header: { 'Content-Type': 'application/json' },
+  });
 
 export const deleteUser = (userId) => {
   const result = axios({
@@ -41,21 +43,22 @@ export const signUpUser = ({
   email,
   password,
   description,
-}) => axios({
-  method: 'POST',
-  url: `http://${api}/sign_up`,
-  data: {
-    username,
-    firstName,
-    lastName,
-    email,
-    password,
-    description,
-  },
-  header: {
-    'Content-Type': 'application/x-www-form-urlencoded',
-  },
-});
+}) =>
+  axios({
+    method: 'POST',
+    url: `http://${api}/sign_up`,
+    data: {
+      username,
+      firstName,
+      lastName,
+      email,
+      password,
+      description,
+    },
+    header: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
 
 export const getUser = (userId) => {
   const result = axios({
@@ -95,3 +98,13 @@ export const updateUser = async ({
 
   return result;
 };
+
+export const getFriends = (id) =>
+  axios({
+    method: 'GET',
+    url: `http://${api}/friends/${id}`,
+    data: {
+      id,
+    },
+    header: { 'Content-Type': 'application/json' },
+  });

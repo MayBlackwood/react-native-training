@@ -17,3 +17,9 @@ export const USER_UPDATE_FAILURE = 'user_update_failure';
 export const USER_SIGN_UP = 'user_sign_up';
 export const SIGN_UP_REQUEST = 'sign_up_request';
 export const SIGN_UP_FAILURE = 'login_failure';
+
+export const FRIENDS_LOADED = 'friends_loaded';
+export const FRIENDS_REQUEST = 'friends_request';
+export const FRIENDS_FAILURE = 'friends_failure';
+
+export const SORT_FRIENDS = 'sort_friends';

@@ -11,6 +11,7 @@ import SignUpScreen from './app/screens/SignUpScreen';
 import EditUserPage from './app/screens/EditUserPage';
 import Profile from './app/screens/Profile';
 import UsersList from './app/screens/UsersList';
+import FriendsList from './app/screens/FriendsList';
 import store from './app/store/index';
 
 const Stack = createStackNavigator();
@@ -51,6 +52,11 @@ const App = () => (
             name="EditUserPage"
             component={EditUserPage}
             options={{ title: 'Edit User' }}
+          />
+          <Stack.Screen
+            name="FriendsList"
+            component={FriendsList}
+            options={{ title: 'My Friends' }}
           />
         </Stack.Navigator>
       </NavigationContainer>

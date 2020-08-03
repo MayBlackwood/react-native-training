@@ -1,9 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  StyleSheet, Text, View, SafeAreaView,
-} from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 
 import { Button } from 'react-native-elements';
 import { logOutUser } from '../store/actions/UserActions';
@@ -33,6 +31,11 @@ const WelcomeScreen = ({ navigation }) => {
           buttonStyle={styles.button}
           title="Users List"
           onPress={() => goToButton('UsersList')}
+        />
+        <Button
+          buttonStyle={styles.button}
+          title="My Friends"
+          onPress={() => goToButton('FriendsList')}
         />
       </View>
     </SafeAreaView>
