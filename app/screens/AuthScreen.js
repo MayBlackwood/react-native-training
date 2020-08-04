@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -7,8 +7,10 @@ import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 import { Button } from 'react-native-elements';
 import { logIn } from '../store/actions/UserActions';
+import { getUserFriends } from '../store/actions/FriendsActions';
 import FormInput from '../components/FormInput';
 import Preloader from '../components/Preloader';
+import { SORT_USERS } from '../store/constants';
 
 const LogInSchema = Yup.object().shape({
   username: Yup.string()
@@ -22,8 +24,15 @@ const LogInSchema = Yup.object().shape({
 });
 
 const AuthScreen = ({ navigation }) => {
-  const { isLoading } = useSelector(({ user }) => user);
+  const { isLoading, error, userId } = useSelector(({ user }) => user);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!!userId) {
+      dispatch(getUserFriends(userId));
+      console.log(userId);
+    }
+  }, [userId]);
 
   const handleLogInButton = ({ username, password }) => {
     dispatch(logIn(username, password, navigation));
@@ -39,9 +48,7 @@ const AuthScreen = ({ navigation }) => {
           validationSchema={LogInSchema}
           onSubmit={(values) => handleLogInButton(values)}
         >
-          {({
-            handleChange, handleSubmit, values, errors, touched,
-          }) => (
+          {({ handleChange, handleSubmit, values, errors, touched }) => (
             <SafeAreaView style={styles.container}>
               <View style={{ width: '70%' }}>
                 {logInFormConfig.map(({ value, title }) => (

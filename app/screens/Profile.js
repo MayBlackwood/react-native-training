@@ -16,6 +16,7 @@ import {
   faList,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import FriendsActionsButtonSection from '../components/FriendsActionsButtonSection';
 
 const Profile = ({
   navigation,
@@ -24,10 +25,13 @@ const Profile = ({
   },
 }) => {
   const usersState = useSelector(({ users }) => users);
-  const users = usersState.data;
   const currentUser = useSelector(({ user }) => user);
+
+  const users = usersState.data;
   const { role: currentUserRole, userId: currentUserId } = currentUser;
   const user = users.find((user) => user.id === userId);
+
+  const { username, firstname, lastname, email, description, id, role } = user;
 
   const handleButtonClick = () => {
     navigation.navigate('EditUserPage', {
@@ -35,16 +39,11 @@ const Profile = ({
     });
   };
 
-  const {
-    username, firstname, lastname, email, description, id, role,
-  } = user;
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
         style={{ width: '100%', height: '100%' }}
         contentContainerStyle={{
-          flex: 1,
           alignItems: 'center',
           justifyContent: 'space-between',
         }}
@@ -86,15 +85,24 @@ const Profile = ({
             {description || 'No description provided.'}
           </Text>
         </View>
-        <View style={styles.section}>
-          {(currentUserRole === 'admin' || currentUserId === id) && (
-            <Button
-              title="Edit profile"
-              onPress={handleButtonClick}
-              buttonStyle={styles.editProfileButton}
-            />
+        {currentUserRole === 'admin' ||
+          (currentUserRole !== 'admin' && currentUserId === id) && (
+            <View style={styles.section}>
+              <Button
+                title="Edit profile"
+                onPress={handleButtonClick}
+                buttonStyle={styles.editProfileButton}
+              />
+            </View>
           )}
-        </View>
+        {currentUserId !== id && (
+          <View style={styles.section}>
+            <FriendsActionsButtonSection
+              userId={id}
+              currentUserId={currentUserId}
+            />
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );

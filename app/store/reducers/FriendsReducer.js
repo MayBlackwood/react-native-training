@@ -9,6 +9,10 @@ const INITIAL_STATE = {
   data: [],
   isLoading: false,
   error: null,
+  requests: {
+    incoming: [],
+    outgoing: [],
+  },
 };
 
 export default (state = INITIAL_STATE, action) => {

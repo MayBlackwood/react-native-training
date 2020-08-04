@@ -5,6 +5,9 @@ import EntryAppScreen from './EntryAppScreen';
 
 const Home = ({ navigation }) => {
   const data = useSelector(({ user }) => user);
+  // const store = useSelector((store) => store);
+  // console.log('===========');
+  // console.log(store.friends);
   return data.token ? (
     <WelcomeScreen navigation={navigation} />
   ) : (
