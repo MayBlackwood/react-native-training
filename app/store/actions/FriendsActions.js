@@ -8,8 +8,19 @@ import {
   FRIEND_REQUEST_PROCESS,
   FRIEND_REQUEST_SENT,
   FRIEND_REQUEST_FAIL,
+  REQUESTS_LOAD,
+  REQUESTS_SUCCESS,
+  REQUESTS_FAIL,
+  FRIEND_ACCEPT_PROCESS,
+  FRIEND_ACCEPT_SUCCESS,
+  FRIEND_ACCEPT_FAIL,
 } from '../constants';
-import { getFriends, sendFriendRequest as sendRequest } from '../../services';
+import {
+  getFriends,
+  sendFriendRequest as sendRequest,
+  getOutgoingRequests,
+  getIncomingRequests,
+} from '../../services';
 
 export const getUserFriends = (id) => async (dispatch) => {
   try {
@@ -45,6 +56,28 @@ export const updateOrder = (usersData) => (dispatch) => {
   });
 };
 
+export const getFriendRequests = (userId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: REQUESTS_LOAD,
+    });
+    const { data: outgoingRequests } = await getOutgoingRequests(userId);
+    const { data: incomingRequests } = await getIncomingRequests(userId);
+    dispatch({
+      type: REQUESTS_SUCCESS,
+      payload: {
+        incoming: incomingRequests,
+        outgoing: outgoingRequests,
+      },
+    });
+  } catch (error) {
+    dispatch({
+      type: REQUESTS_FAIL,
+      error,
+    });
+  }
+};
+
 export const sendFriendRequest = (requesterId, addresseeId) => async (
   dispatch,
 ) => {
@@ -55,10 +88,11 @@ export const sendFriendRequest = (requesterId, addresseeId) => async (
 
     const { data } = await sendRequest(requesterId, addresseeId);
     Alert.alert('Friend request', data);
+    const request = { addressee_id: addresseeId };
     dispatch({
       type: FRIEND_REQUEST_SENT,
       payload: {
-        userId: addresseeId,
+        request,
       },
     });
   } catch (error) {

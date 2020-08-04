@@ -7,10 +7,12 @@ import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 import { Button } from 'react-native-elements';
 import { logIn } from '../store/actions/UserActions';
-import { getUserFriends } from '../store/actions/FriendsActions';
+import {
+  getUserFriends,
+  getFriendRequests,
+} from '../store/actions/FriendsActions';
 import FormInput from '../components/FormInput';
 import Preloader from '../components/Preloader';
-import { SORT_USERS } from '../store/constants';
 
 const LogInSchema = Yup.object().shape({
   username: Yup.string()
@@ -24,13 +26,13 @@ const LogInSchema = Yup.object().shape({
 });
 
 const AuthScreen = ({ navigation }) => {
-  const { isLoading, error, userId } = useSelector(({ user }) => user);
+  const { isLoading, userId } = useSelector(({ user }) => user);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!!userId) {
+    if (userId) {
       dispatch(getUserFriends(userId));
-      console.log(userId);
+      dispatch(getFriendRequests(userId));
     }
   }, [userId]);
 

@@ -26,4 +26,12 @@ export const FRIEND_REQUEST_PROCESS = 'friend_request_process';
 export const FRIEND_REQUEST_SENT = 'friend_request_sent';
 export const FRIEND_REQUEST_FAIL = 'friend_request_fail';
 
+export const FRIEND_ACCEPT_PROCESS = 'friend_accept_process';
+export const FRIEND_ACCEPT_SUCCESS = 'friend_accept_success';
+export const FRIEND_ACCEPT_FAIL = 'friend_accept-fail';
+
+export const REQUESTS_LOAD = 'requests_load';
+export const REQUESTS_SUCCESS = 'request_success';
+export const REQUESTS_FAIL = 'requests_fail';
+
 export const SORT_FRIENDS = 'sort_friends';

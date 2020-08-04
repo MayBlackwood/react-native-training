@@ -86,7 +86,7 @@ const Profile = ({
           </Text>
         </View>
         {currentUserRole === 'admin' ||
-          (currentUserRole !== 'admin' && currentUserId === id) && (
+          (currentUserRole !== 'admin' && currentUserId === id && (
             <View style={styles.section}>
               <Button
                 title="Edit profile"
@@ -94,7 +94,7 @@ const Profile = ({
                 buttonStyle={styles.editProfileButton}
               />
             </View>
-          )}
+          ))}
         {currentUserId !== id && (
           <View style={styles.section}>
             <FriendsActionsButtonSection

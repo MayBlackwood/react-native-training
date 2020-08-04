@@ -113,10 +113,30 @@ export const getFriends = (id) =>
 export const sendFriendRequest = (requesterId, addresseeId) =>
   axios({
     method: 'POST',
-    url: `http://${api}/friends/add`,
+    url: `http://${api}/friends/add/`,
     data: {
       requesterId,
       addresseeId,
+    },
+    header: { 'Content-Type': 'application/json' },
+  });
+
+export const getOutgoingRequests = (userId) =>
+  axios({
+    method: 'GET',
+    url: `http://${api}/requests/outgoing${userId}`,
+    data: {
+      userId: userId,
+    },
+    header: { 'Content-Type': 'application/json' },
+  });
+
+export const getIncomingRequests = (userId) =>
+  axios({
+    method: 'GET',
+    url: `http://${api}/requests/incoming${userId}`,
+    data: {
+      userId,
     },
     header: { 'Content-Type': 'application/json' },
   });

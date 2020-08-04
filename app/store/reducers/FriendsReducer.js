@@ -6,6 +6,12 @@ import {
   FRIEND_REQUEST_PROCESS,
   FRIEND_REQUEST_SENT,
   FRIEND_REQUEST_FAIL,
+  REQUESTS_LOAD,
+  REQUESTS_SUCCESS,
+  REQUESTS_FAIL,
+  FRIEND_ACCEPT_PROCESS,
+  FRIEND_ACCEPT_SUCCESS,
+  FRIEND_ACCEPT_FAIL,
 } from '../constants';
 
 const INITIAL_STATE = {
@@ -42,6 +48,29 @@ export default (state = INITIAL_STATE, action) => {
         error: action.error,
       };
 
+    case REQUESTS_LOAD:
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      };
+    case REQUESTS_SUCCESS:
+      const { incoming, outgoing } = action.payload;
+      return {
+        ...state,
+        requests: {
+          incoming,
+          outgoing,
+        },
+        isLoading: false,
+      };
+    case REQUESTS_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.error,
+      };
+
     case SORT_FRIENDS:
       const sortedUsers = action.payload.data;
       return {
@@ -62,7 +91,8 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         requests: {
-          outgoing: [...state.requests.outgoing, action.payload.userId],
+          outgoing: [...state.requests.outgoing, action.payload.request],
+          incoming: [...state.requests.incoming],
         },
       };
 
