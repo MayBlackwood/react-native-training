@@ -110,21 +110,13 @@ export const getFriends = (id) =>
     header: { 'Content-Type': 'application/json' },
   });
 
-export const sendFriendRequest = async (requesterId, addresseeId) => {
-  try {
-    const { data } = await axios({
-      method: 'POST',
-      url: `http://${api}/friends/add`,
-      data: {
-        requesterId,
-        addresseeId,
-      },
-      header: { 'Content-Type': 'application/json' },
-    });
-
-    Alert.alert('Friend request', data);
-  } catch (error) {
-    Alert.alert('Friend request', error.message);
-    throw error;
-  }
-};
+export const sendFriendRequest = (requesterId, addresseeId) =>
+  axios({
+    method: 'POST',
+    url: `http://${api}/friends/add`,
+    data: {
+      requesterId,
+      addresseeId,
+    },
+    header: { 'Content-Type': 'application/json' },
+  });

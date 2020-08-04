@@ -3,6 +3,9 @@ import {
   FRIENDS_REQUEST,
   FRIENDS_FAILURE,
   SORT_FRIENDS,
+  FRIEND_REQUEST_PROCESS,
+  FRIEND_REQUEST_SENT,
+  FRIEND_REQUEST_FAIL,
 } from '../constants';
 
 const INITIAL_STATE = {
@@ -45,6 +48,29 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         data: sortedUsers,
         isLoading: false,
+      };
+
+    case FRIEND_REQUEST_PROCESS:
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      };
+
+    case FRIEND_REQUEST_SENT:
+      return {
+        ...state,
+        isLoading: false,
+        requests: {
+          outgoing: [...state.requests.outgoing, action.payload.userId],
+        },
+      };
+
+    case FRIEND_REQUEST_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload.error,
       };
 
     default:

@@ -22,4 +22,8 @@ export const FRIENDS_LOADED = 'friends_loaded';
 export const FRIENDS_REQUEST = 'friends_request';
 export const FRIENDS_FAILURE = 'friends_failure';
 
+export const FRIEND_REQUEST_PROCESS = 'friend_request_process';
+export const FRIEND_REQUEST_SENT = 'friend_request_sent';
+export const FRIEND_REQUEST_FAIL = 'friend_request_fail';
+
 export const SORT_FRIENDS = 'sort_friends';
