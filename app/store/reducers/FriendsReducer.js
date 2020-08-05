@@ -12,6 +12,9 @@ import {
   FRIEND_ACCEPT_PROCESS,
   FRIEND_ACCEPT_SUCCESS,
   FRIEND_ACCEPT_FAIL,
+  FRIEND_REMOVE_SUCCESS,
+  FRIEND_REMOVE_PROCESS,
+  FRIEND_REMOVE_FAIL,
 } from '../constants';
 
 const INITIAL_STATE = {
@@ -118,6 +121,27 @@ export default (state = INITIAL_STATE, action) => {
       };
 
     case FRIEND_ACCEPT_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.error,
+      };
+
+    case FRIEND_REMOVE_PROCESS:
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      };
+
+    case FRIEND_REMOVE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        data: state.data.filter((user) => user.id !== action.payload.userId),
+      };
+
+    case FRIEND_REMOVE_FAIL:
       return {
         ...state,
         isLoading: false,

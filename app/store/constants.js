@@ -34,4 +34,8 @@ export const REQUESTS_LOAD = 'requests_load';
 export const REQUESTS_SUCCESS = 'request_success';
 export const REQUESTS_FAIL = 'requests_fail';
 
+export const FRIEND_REMOVE_PROCESS = 'friend_remove_process';
+export const FRIEND_REMOVE_SUCCESS = 'friend_remove_success';
+export const FRIEND_REMOVE_FAIL = 'friend_remove_fail';
+
 export const SORT_FRIENDS = 'sort_friends';

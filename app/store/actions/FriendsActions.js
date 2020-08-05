@@ -14,6 +14,9 @@ import {
   FRIEND_ACCEPT_PROCESS,
   FRIEND_ACCEPT_SUCCESS,
   FRIEND_ACCEPT_FAIL,
+  FRIEND_REMOVE_SUCCESS,
+  FRIEND_REMOVE_PROCESS,
+  FRIEND_REMOVE_FAIL,
 } from '../constants';
 import {
   getFriends,
@@ -21,6 +24,7 @@ import {
   acceptFriendRequest as acceptRequest,
   getOutgoingRequests,
   getIncomingRequests,
+  deleteUserFromFriends as deleteFriend,
 } from '../../services';
 
 export const getUserFriends = (id) => async (dispatch) => {
@@ -125,12 +129,34 @@ export const acceptFriendRequest = (requesterId, addresseeId) => async (
     });
   } catch (error) {
     dispatch({
-      type: FRIEND_REQUEST_FAIL,
+      type: FRIEND_ACCEPT_FAIL,
       payload: {
         error,
       },
     });
     Alert.alert('Friend request', error.message);
     throw error;
+  }
+};
+
+export const removeUserFromFriends = (friendId, currentUserId) => async (
+  dispatch,
+) => {
+  try {
+    dispatch({ type: FRIEND_REMOVE_PROCESS });
+
+    await deleteFriend(friendId, currentUserId);
+
+    dispatch({
+      type: FRIEND_REMOVE_SUCCESS,
+      payload: {
+        userId: friendId,
+      },
+    });
+  } catch (error) {
+    dispatch({
+      type: FRIEND_REMOVE_FAIL,
+      error,
+    });
   }
 };

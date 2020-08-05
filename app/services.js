@@ -151,3 +151,16 @@ export const acceptFriendRequest = (requesterId, addresseeId) =>
     },
     header: { 'Content-Type': 'application/json' },
   });
+
+export const deleteUserFromFriends = (friendId, currentUserId) =>
+  axios({
+    method: 'DELETE',
+    url: `http://${api}/friends/remove`,
+    data: {
+      userId: friendId,
+      currentUserId,
+    },
+    header: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });

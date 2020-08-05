@@ -1,11 +1,12 @@
 import React, { Fragment, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import {
   getFriendRequests,
   sendFriendRequest,
   acceptFriendRequest,
+  removeUserFromFriends,
 } from '../store/actions/FriendsActions';
 
 const FriendsActionsButtonSection = ({ currentUserId, userId }) => {
@@ -34,6 +35,10 @@ const FriendsActionsButtonSection = ({ currentUserId, userId }) => {
     dispatch(acceptFriendRequest(userId, currentUserId));
   };
 
+  const removeFriend = () => {
+    dispatch(removeUserFromFriends(userId, currentUserId));
+  };
+
   return (
     <Fragment>
       {!isFriend && !isOutgoingRequest && !isIncomingRequest && (
@@ -46,22 +51,37 @@ const FriendsActionsButtonSection = ({ currentUserId, userId }) => {
       {isFriend && !isOutgoingRequest && !isIncomingRequest && (
         <Button
           title="Remove From Friends"
+          onPress={removeFriend}
           buttonStyle={styles.editProfileButton}
         />
       )}
       {isOutgoingRequest && (
-        <Button
-          title="Request was Sent"
-          disabled
-          buttonStyle={styles.editProfileButton}
-        />
+        <View style={{ flex: 1 }}>
+          <Button
+            title="Request was Sent"
+            disabled
+            buttonStyle={styles.editProfileButton}
+          />
+          <Button
+            title="Decline request"
+            onPress={removeFriend}
+            buttonStyle={styles.editProfileButton}
+          />
+        </View>
       )}
       {isIncomingRequest && (
-        <Button
-          title="Accept Friend"
-          onPress={acceptRequest}
-          buttonStyle={styles.editProfileButton}
-        />
+        <View style={{ flex: 1 }}>
+          <Button
+            title="Accept Friend"
+            onPress={acceptRequest}
+            buttonStyle={styles.editProfileButton}
+          />
+          <Button
+            title="Decline Request"
+            onPress={removeFriend}
+            buttonStyle={styles.editProfileButton}
+          />
+        </View>
       )}
     </Fragment>
   );
