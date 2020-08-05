@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import sortBy from 'lodash.sortby';
@@ -7,7 +7,13 @@ import ListItem from './ListItem';
 import Preloader from './Preloader';
 import ErrorMessage from './ErrorMessage';
 
-const List = ({ initData, listName, orderFunction, navigation }) => {
+const List = ({
+  initData,
+  listName,
+  orderFunction,
+  emptyMessage,
+  navigation,
+}) => {
   const { data: items, error, isLoading } = useSelector(
     (store) => store[listName],
   );
@@ -30,10 +36,8 @@ const List = ({ initData, listName, orderFunction, navigation }) => {
   };
 
   useEffect(() => {
-    if (!items.length) {
-      dispatch(initData());
-    }
-  }, [items]);
+    dispatch(initData());
+  }, [navigation]);
 
   const renderItem = ({ item, index, move, moveEnd, isActive }) => (
     <ListItem
@@ -50,6 +54,24 @@ const List = ({ initData, listName, orderFunction, navigation }) => {
     <View style={{ flex: 1 }}>
       {isLoading && <Preloader />}
       {!isLoading && error && <ErrorMessage error={error.message} />}
+      {!isLoading && !error && !items.length && (
+        <View
+          style={{
+            width: '100%',
+            height: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 25,
+            }}
+          >
+            {emptyMessage}
+          </Text>
+        </View>
+      )}
       {!isLoading && !error && items && (
         <DraggableFlatList
           data={items}

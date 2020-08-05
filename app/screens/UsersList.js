@@ -7,6 +7,7 @@ const UsersList = ({ navigation }) => (
     initData={getAllUsers}
     listName="users"
     orderFunction={updateOrder}
+    emptyMessage="There is no users yet."
     navigation={navigation}
   />
 );

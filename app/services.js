@@ -104,9 +104,6 @@ export const getFriends = (id) =>
   axios({
     method: 'GET',
     url: `http://${api}/friends/${id}`,
-    data: {
-      id,
-    },
     header: { 'Content-Type': 'application/json' },
   });
 

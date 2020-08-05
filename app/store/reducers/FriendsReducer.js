@@ -51,6 +51,14 @@ export default (state = INITIAL_STATE, action) => {
         error: action.error,
       };
 
+    case SORT_FRIENDS:
+      const sortedFriends = action.payload.data;
+      return {
+        ...state,
+        data: sortedFriends,
+        isLoading: false,
+      };
+
     case REQUESTS_LOAD:
       return {
         ...state,

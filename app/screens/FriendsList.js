@@ -1,8 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import List from '../components/List';
-import { updateOrder } from '../store/actions/UsersActions';
-import { getUserFriends } from '../store/actions/FriendsActions';
+import { getUserFriends, updateOrder } from '../store/actions/FriendsActions';
 
 const FriendsList = ({ navigation }) => {
   const currentUserId = useSelector(({ user }) => user.userId);
@@ -12,6 +11,7 @@ const FriendsList = ({ navigation }) => {
       initData={() => getUserFriends(currentUserId)}
       listName="friends"
       orderFunction={updateOrder}
+      emptyMessage="There is no friends yet."
       navigation={navigation}
     />
   );
