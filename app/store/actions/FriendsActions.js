@@ -18,6 +18,7 @@ import {
 import {
   getFriends,
   sendFriendRequest as sendRequest,
+  acceptFriendRequest as acceptRequest,
   getOutgoingRequests,
   getIncomingRequests,
 } from '../../services';
@@ -93,6 +94,33 @@ export const sendFriendRequest = (requesterId, addresseeId) => async (
       type: FRIEND_REQUEST_SENT,
       payload: {
         request,
+      },
+    });
+  } catch (error) {
+    dispatch({
+      type: FRIEND_REQUEST_FAIL,
+      payload: {
+        error,
+      },
+    });
+    Alert.alert('Friend request', error.message);
+    throw error;
+  }
+};
+
+export const acceptFriendRequest = (requesterId, addresseeId) => async (
+  dispatch,
+) => {
+  try {
+    dispatch({ type: FRIEND_ACCEPT_PROCESS });
+    const {
+      data: { data, message },
+    } = await acceptRequest(requesterId, addresseeId);
+    Alert.alert('Friend request', message);
+    dispatch({
+      type: FRIEND_ACCEPT_SUCCESS,
+      payload: {
+        user: data,
       },
     });
   } catch (error) {

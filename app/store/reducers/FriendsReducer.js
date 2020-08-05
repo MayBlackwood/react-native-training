@@ -103,6 +103,27 @@ export default (state = INITIAL_STATE, action) => {
         error: action.payload.error,
       };
 
+    case FRIEND_ACCEPT_PROCESS:
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      };
+
+    case FRIEND_ACCEPT_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        data: [...state.data, action.payload.user],
+      };
+
+    case FRIEND_ACCEPT_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.error,
+      };
+
     default:
       return state;
   }

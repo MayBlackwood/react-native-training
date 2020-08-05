@@ -126,7 +126,7 @@ export const getOutgoingRequests = (userId) =>
     method: 'GET',
     url: `http://${api}/requests/outgoing${userId}`,
     data: {
-      userId: userId,
+      userId,
     },
     header: { 'Content-Type': 'application/json' },
   });
@@ -137,6 +137,17 @@ export const getIncomingRequests = (userId) =>
     url: `http://${api}/requests/incoming${userId}`,
     data: {
       userId,
+    },
+    header: { 'Content-Type': 'application/json' },
+  });
+
+export const acceptFriendRequest = (requesterId, addresseeId) =>
+  axios({
+    method: 'POST',
+    url: `http://${api}/friends/accept`,
+    data: {
+      requesterId,
+      addresseeId,
     },
     header: { 'Content-Type': 'application/json' },
   });
